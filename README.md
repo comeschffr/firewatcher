@@ -8,3 +8,10 @@ Forest fires history
 Select a continent 
 
 Give insights to the user
+
+
+Useful links:
+autocompleter full tutorial: https://sites.google.com/site/xiangyangsite/home/technical-tips/software-development/python/python-readline-completions
+--> see path_autocompleter2.py
+
+
