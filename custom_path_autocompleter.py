@@ -86,6 +86,7 @@ cluster_centers, _ = kmeans(satellite_image_df[['scaled_color_red', 'scaled_colo
 '''
 Last step is to find the dominant colors and stardardize their values.
 '''
+
 dominant_colors = []
  
 # Get standard deviations of each color
