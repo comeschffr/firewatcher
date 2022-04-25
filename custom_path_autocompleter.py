@@ -23,13 +23,15 @@ readline.set_completer(completer)
 
 input('>>> ')
 
+# I selected Python 3.9.7 ('base') as environment and imported all of the modules that were missing
+
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 from scipy.cluster.vq import whiten, kmeans
 import pandas as pd
  
 # Convert the image to pixels
-satellite_image = img.imread('satellite_image.jpg')
+satellite_image = img.imread('/Users/carlochionettismiderle/Desktop/satellite_image.jpeg')
  
 '''
 We are collectively looking at all of the pixels and extracting the RGB values and store them in them
@@ -42,7 +44,7 @@ r = []
 g = []
 b = []
 for row in satellite_image:
-    for temp_r, temp_g, temp_b, temp in row:
+    for temp_r, temp_g, temp_b in row:
         r.append(temp_r)
         g.append(temp_g)
         b.append(temp_b)
@@ -73,12 +75,14 @@ for i in num_clusters:
 elbow_plot = pd.DataFrame({'num_clusters' : num_clusters, 'distortions' : distortions})
  
 # Create a line plot of num_clusters and distortions
-sns.lineplot(x = 'num_clusters', y = 'distortions', data = elbow_plot)
+data = elbow_plot
+df = pd.DataFrame(data ,columns=['num_clusters','distortions'])
+df.plot(x = 'num_clusters', y = 'distortions', kind = 'line')
 plt.xticks(num_clusters)
 plt.show()
 
 print('Please enter the number of clusters.')
-clusters = input('>>>')
+clusters = int(input('>>> '))
 
 cluster_centers, _ = kmeans(satellite_image_df[['scaled_color_red', 'scaled_color_blue', 'scaled_color_green']], clusters)
  
@@ -103,4 +107,3 @@ for cluster_center in cluster_centers:
  
 plt.imshow([dominant_colors])
 plt.show()
-
