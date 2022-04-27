@@ -1,27 +1,27 @@
-import readline
-import os
+# import readline
+# import os
 
 
-def completer(text: str, state: int) -> str:
-    last_path = os.path.dirname(
-        readline.get_line_buffer().split(' ')[-1]
-    )
-    direntry = os.scandir('./'+last_path)
-    volcab = []
-    for item in direntry:
-        if item.is_dir():
-            volcab.append(item.name+"/")
-        else:
-            volcab.append(item.name+" ")
-    results = [x for x in volcab if x.lower().startswith(text.lower())] + [None]
-    return results[state]
+# def completer(text: str, state: int) -> str:
+#     last_path = os.path.dirname(
+#         readline.get_line_buffer().split(' ')[-1]
+#     )
+#     direntry = os.scandir('./'+last_path)
+#     volcab = []
+#     for item in direntry:
+#         if item.is_dir():
+#             volcab.append(item.name+"/")
+#         else:
+#             volcab.append(item.name+" ")
+#     results = [x for x in volcab if x.lower().startswith(text.lower())] + [None]
+#     return results[state]
 
 
-readline.parse_and_bind('tab: complete')
-readline.set_completer(completer)
+# readline.parse_and_bind('tab: complete')
+# readline.set_completer(completer)
 
 
-input('>>> ')
+# input('>>> ')
 
 # I selected Python 3.9.7 ('base') as environment and imported all of the modules that were missing
 
@@ -107,7 +107,12 @@ for cluster_center in cluster_centers:
  
 plt.imshow([dominant_colors])
 plt.show()
-print(cluster_centers)
+
+dominant_colors_rgb = tuple(tuple(round(255 * i) for i in elem) for elem in dominant_colors)
+
+print(dominant_colors_rgb)
+
+
 
 
 '''
