@@ -31,7 +31,7 @@ from scipy.cluster.vq import whiten, kmeans
 import pandas as pd
  
 # Convert the image to pixels
-satellite_image = img.imread('/Users/carlochionettismiderle/Desktop/satellite_image.jpeg')
+satellite_image = img.imread('satellite_image.jpeg')
  
 '''
 We are collectively looking at all of the pixels and extracting the RGB values and store them in them
@@ -107,3 +107,20 @@ for cluster_center in cluster_centers:
  
 plt.imshow([dominant_colors])
 plt.show()
+print(cluster_centers)
+
+
+'''
+Creation of color database and retrieve the dominant color names.
+'''
+
+#import sqlite3
+
+#with sqlite3.connect('color_database.db') as conn:
+#    c = conn.cursor()
+
+#c.execute("CREATE TABLE IF NOT EXISTS color_database([r] INTEGER, [g] INTEGER, [b] INTEGER)")
+#conn.commit()
+
+#c.execute('INSERT INTO color_database (r, g, b) VALUES ({}, {}, {})'.format(r, g, b)
+
