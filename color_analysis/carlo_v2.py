@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import imutils
+import os
 
 clusters = 3
 
@@ -76,7 +77,7 @@ plt.savefig('color_analysis/final_v2/dominant_colors.png')
 
 cv2.imwrite('color_analysis/final_v2/output.png', final)
 
-
+print('The RGB values for the 3 dominant colors are: ', os.linesep, dominant_colors[0], os.linesep, dominant_colors[1], os.linesep, dominant_colors[2])
 
 
 
