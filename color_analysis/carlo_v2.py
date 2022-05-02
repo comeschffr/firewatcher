@@ -62,7 +62,7 @@ copy = img.copy()
 cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255),-1)
 
 final = cv2.addWeighted(img, 0.1, copy, 0.9, 0)
-cv2.putText(final, 'Most Dominant Colors in the Image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 0, 0),1 ,cv2.LINE_AA)
+cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
 
 
 start = rows//2-220
