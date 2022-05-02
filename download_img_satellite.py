@@ -7,6 +7,7 @@ import ee
 import numpy as np
 import requests
 from PIL import Image
+from tqdm import tqdm
 
 
 logging.basicConfig(level=logging.INFO)
@@ -44,14 +45,27 @@ def get_aoi(lat: float, lon: float) -> ee.Geometry.Polygon:
     return aoi
 
 
+def remove_duplicate_dates(list_of_imgs: ee.List) -> ee.List:
+    already_seen_dates = set()
+    cleaned_img_list = ee.List([])
+
+    for i in range(list_of_imgs.size().getInfo()):
+        date_acquired = list_of_imgs.get(i).getInfo()['properties']['DATE_ACQUIRED']
+        if date_acquired not in already_seen_dates:
+            cleaned_img_list = cleaned_img_list.add(list_of_imgs.get(i))
+            already_seen_dates.add(date_acquired)
+
+    return cleaned_img_list
+
+
 @timer
 def get_most_recent_imgs(aoi: ee.Geometry.Polygon) -> ee.Image:
     collection = (
         ee.ImageCollection("LANDSAT/LC09/C02/T1_L2")
         .filterBounds(aoi)
         .filter("CLOUD_COVER < 55")
+        .sort('CLOUD_COVER')
         .sort('system:time_start', False)
-        .limit(2)
     )
 
     def applyScaleFactors(image):
@@ -61,10 +75,11 @@ def get_most_recent_imgs(aoi: ee.Geometry.Polygon) -> ee.Image:
 
     collection = collection.map(applyScaleFactors)
 
-    if collection.size().getInfo() < 2:
-        raise ValueError("Could not find enough images for further analysis (<2 images)")
+    list_of_imgs = collection.toList(collection.size().getInfo())
+    list_of_imgs = remove_duplicate_dates(list_of_imgs)
 
-    list_of_imgs = collection.toList(2)
+    if list_of_imgs.size().getInfo() < 2:
+        raise ValueError("Could not find enough images for further analysis (<2 images)")
 
     img1 = ee.Image(list_of_imgs.get(0))
     img2 = ee.Image(list_of_imgs.get(1))
@@ -92,18 +107,27 @@ def get_img_download_url(img: ee.Image, aoi: ee.Geometry.Polygon) -> str:
 
 @timer
 def download_file(url: str, base_filename: str, lat: float, lon: float, id: int) -> str:
-    logging.info(f"Requesting image {str(id)} at {url}...")
-    r = requests.get(url)
-
     curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
     filepath = (
         "images/" + base_filename + "_" +
         str(lat) + "_" + str(lon) + "_" +
         curr_date + "_" + str(id) + ".arr"
     )
+
+    logging.info(f"Requesting image {str(id)} at {url}...")
+    r = requests.get(url, stream=True)
+    total = int(r.headers.get('content-length', 0))
+
     logging.info(f"Saving raw request content to {filepath}")
-    with open(filepath, "wb") as f:
-        f.write(r.content)
+    with open(filepath, "wb") as f, tqdm(
+        total=total,
+        unit="iB",
+        unit_scale=True,
+        unit_divisor=1024,
+    ) as bar:
+        for data in r.iter_content(chunk_size=1024):
+            size = f.write(data)
+            bar.update(size)
 
     return filepath
 
