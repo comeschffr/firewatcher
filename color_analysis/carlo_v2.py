@@ -41,10 +41,10 @@ plt.figure(figsize=(12, 8))
 plt.title('Proportions of colors in the image')
 start = 0
 i = 1
-for p,c in p_and_c:
+for p, c in p_and_c:
     end = start+int(p*bar.shape[1])
     if i==clusters:
-        bar[:,start:] = c[::-1]
+        bar[:, start:] = c[::-1]
     else:
         bar[:, start:end] = c[::-1]
     start = end
@@ -62,14 +62,14 @@ copy = img.copy()
 cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255),-1)
 
 final = cv2.addWeighted(img, 0.1, copy, 0.9, 0)
-cv2.putText(final, 'Most Dominant Colors in the Image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 0, 0),1 ,cv2.LINE_AA)
+cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
 
 
 start = rows//2-220
 for i in range(3):
     end = start+135
-    final[cols//2:cols//2+70,start:end] = p_and_c[i][1]
-    cv2.putText(final,str(i+1),(start+55,cols//2+45),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),1,cv2.LINE_AA)
+    final[cols//2:cols//2+70, start:end] = p_and_c[i][1]
+    cv2.putText(final, str(i+1), (start+55, cols//2+45), cv2.FONT_HERSHEY_DUPLEX, 1 , (0, 0, 0),1 , cv2.LINE_AA)
     start = end+20
 
 plt.savefig('color_analysis/final_v2/dominant_colors.png')
