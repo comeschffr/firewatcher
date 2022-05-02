@@ -7,6 +7,7 @@ import ee
 import numpy as np
 import requests
 from PIL import Image
+from requests.adapters import HTTPAdapter, Retry
 from tqdm import tqdm
 
 
@@ -115,7 +116,19 @@ def download_file(url: str, base_filename: str, lat: float, lon: float, id: int)
     )
 
     logging.info(f"Requesting image {str(id)} at {url}...")
-    r = requests.get(url, stream=True)
+    s = requests.Session()
+    retries = Retry(
+        total=5,
+        backoff_factor=0.1
+    )
+    s.mount('https://', HTTPAdapter(max_retries=retries))
+
+    try:
+        r = s.get(url, stream=True, timeout=10)
+    except requests.exceptions.ConnectionError:
+        logging.critical("Could not request the image")
+        return
+
     total = int(r.headers.get('content-length', 0))
 
     logging.info(f"Saving raw request content to {filepath}")
@@ -162,6 +175,8 @@ if __name__=="__main__":
 
     url1 = get_img_download_url(img1, aoi)
     url2 = get_img_download_url(img2, aoi)
+    # url1 = "https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/de470dc35a2e83a7fd62b5a56d38dbad-8e25e1d400f0ae6257d7f97ff09f55af:getPixels"
+    # url2 = "https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/67bdad2c9b78de8fd5770bb005ab71fe-e985a61b88ea29c0b8361536270b5ade:getPixels"
 
     base_filename = str(uuid.uuid4())[:8]
     filepath1 = download_file(url1, base_filename, lat, lon, 1)
