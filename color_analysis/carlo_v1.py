@@ -86,7 +86,7 @@ for cluster_center in cluster_centers:
 plt.imshow([dominant_colors])
 plt.axis('off')
 plt.title('Dominant colors')
-plt.savefig('dominant_colors.png')
+plt.savefig('dominant_colors_1.png')
 plt.show()
 
 dominant_colors_rgb = tuple(tuple(round(255 * i) for i in elem) for elem in dominant_colors)
