@@ -89,7 +89,6 @@ plt.title('Dominant colors')
 plt.savefig('dominant_colors.png')
 plt.show()
 
-
 dominant_colors_rgb = tuple(tuple(round(255 * i) for i in elem) for elem in dominant_colors)
 
 print(dominant_colors_rgb)
@@ -99,13 +98,13 @@ print(dominant_colors_rgb)
 Creation of color database and retrieve the dominant color names.
 '''
 
-#import sqlite3
+# import sqlite3
 
-#with sqlite3.connect('color_database.db') as conn:
-#    c = conn.cursor()
+# with sqlite3.connect('color_database.db') as conn:
+#     c = conn.cursor()
 
-#c.execute("CREATE TABLE IF NOT EXISTS color_database([r] INTEGER, [g] INTEGER, [b] INTEGER)")
-#conn.commit()
+# c.execute("CREATE TABLE IF NOT EXISTS color_database([r] INTEGER, [g] INTEGER, [b] INTEGER)")
+# conn.commit()
 
-#c.execute('INSERT INTO color_database (r, g, b) VALUES ({}, {}, {})'.format(r, g, b)
+# c.execute('INSERT INTO color_database (r, g, b) VALUES ({}, {}, {})'.format(r, g, b)
 
