@@ -7,7 +7,7 @@ from scipy.cluster.vq import whiten, kmeans
 import pandas as pd
  
 # Convert the image to pixels
-satellite_image = img.imread('satellite_image.jpeg')
+satellite_image = img.imread('color_analysis/satellite_image.jpeg')
  
 '''
 We are collectively looking at all of the pixels and extracting the RGB values and store them in them
@@ -55,7 +55,7 @@ data = elbow_plot
 df = pd.DataFrame(data ,columns=['num_clusters','distortions'])
 df.plot(x = 'num_clusters', y = 'distortions', kind = 'line')
 plt.xticks(num_clusters)
-plt.savefig('elbow_plot_clusters.png')
+plt.savefig('color_analysis/final_v1/elbow_plot_clusters.png')
 plt.clf()
 
 
@@ -86,8 +86,7 @@ for cluster_center in cluster_centers:
 plt.imshow([dominant_colors])
 plt.axis('off')
 plt.title('Dominant colors')
-plt.savefig('dominant_colors_1.png')
-plt.show()
+plt.savefig('color_analysis/final_v1/dominant_colors_1.png')
 
 dominant_colors_rgb = tuple(tuple(round(255 * i) for i in elem) for elem in dominant_colors)
 

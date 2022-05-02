@@ -15,7 +15,7 @@ Line 20 — Fit our image in Kmeans Clustering Algorithm. In this step, the flat
 Line 22 — We are extracting these cluster centers. Now we know that these 3 colors are the dominant colors of the image but still, 
                 we don’t know the extent of each color’s dominance.
 Line 24 — We are calculating the dominance of each dominant color.
-                np.unique(kmeans.labels_,return_counts=True), this statement will return an array with 2 parts, 
+                np.unique(kmeans.labels_,return_counts=True), this statement will return an array with 2 parts:
                 - First part will be the predictions, means to which cluster that pixel belongs 
                 - Second part will contain the counts like [200,130,310] where 200 depicts 
                 the no. of pixels belonging to class 0 or cluster 0(our indexing starts from 0), and so on, 
