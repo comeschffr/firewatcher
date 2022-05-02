@@ -1,3 +1,9 @@
+# custom files
+slides_presentation.pptx
+to_do_list.txt
+images/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
