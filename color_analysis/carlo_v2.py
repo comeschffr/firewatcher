@@ -17,7 +17,7 @@ print('After resizing shape --> ',satellite_img.shape)
 flat_satellite_img = np.reshape(satellite_img, (-1,3))
 print('After Flattening shape --> ', flat_satellite_img.shape)
 
-kmeans = KMeans(n_clusters=clusters, random_state=0)
+kmeans = KMeans(n_clusters=CLUSTERS, random_state=0)
 kmeans.fit(flat_satellite_img)
 
 dominant_colors = np.array(kmeans.cluster_centers_, dtype='uint')
@@ -43,13 +43,13 @@ plt.title('Proportions of colors in the image')
 start = 0
 i = 1
 for p, c in p_and_c:
-    end = start+int(p*bar.shape[1])
-    if i==CLUSTERS:
+    end = start + int(p * bar.shape[1])
+    if i == CLUSTERS:
         bar[:, start:] = c[::-1]
     else:
         bar[:, start:end] = c[::-1]
     start = end
-    i+=1
+    i += 1
 
 plt.imshow(bar)
 plt.xticks([])
@@ -59,7 +59,7 @@ rows = org_img.shape[1]
 cols = org_img.shape[0]
 
 copy = org_img.copy()
-cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255),-1)
+cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255), -1)
 
 final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
 cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
@@ -77,7 +77,3 @@ plt.savefig('color_analysis/final_v2/dominant_colors.png')
 cv2.imwrite('color_analysis/final_v2/output.png', final)
 
 print('The RGB values for the 3 dominant colors are: ', os.linesep, dominant_colors[0], os.linesep, dominant_colors[1], os.linesep, dominant_colors[2])
-
-
-
-
