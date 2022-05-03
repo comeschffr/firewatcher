@@ -1,135 +1,159 @@
+from typing import Tuple
+
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from sklearn.cluster import KMeans
-import imutils
-import os
 
-CLUSTERS = 3
 
-def image_prep(img_filepath: str):
-
+def image_prep(img_filepath: str) -> np.ndarray:
     org_img = cv2.imread(img_filepath)
     satellite_img = org_img.copy()
-    print('Original image shape --> ',satellite_img.shape)
+    print("Original image shape --> ", satellite_img.shape)
 
-    satellite_img = imutils.resize(satellite_img, height=200)
-    print('After resizing shape --> ',satellite_img.shape)
+    satellite_img = cv2.resize(satellite_img, (200, 200), interpolation=cv2.INTER_AREA)
+    print("After resizing shape --> ", satellite_img.shape)
 
     flat_satellite_img = np.reshape(satellite_img, (-1, 3))
-    print('After Flattening shape --> ', flat_satellite_img.shape)
+    print("After Flattening shape --> ", flat_satellite_img.shape)
 
     return flat_satellite_img
 
 
-def p_and_c_analysis(flat_satellite_img, CLUSTERS: int):
-    
+def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> list[Tuple[np.float64, np.ndarray]]:
     kmeans = KMeans(n_clusters=CLUSTERS, random_state=0)
     kmeans.fit(flat_satellite_img)
 
-    dominant_colors = np.array(kmeans.cluster_centers_, dtype='uint')
+    dominant_colors = np.array(kmeans.cluster_centers_, dtype="uint")
 
-    percentages = (np.unique(kmeans.labels_, return_counts = True)[1])/flat_satellite_img.shape[0]
+    percentages = np.unique(kmeans.labels_, return_counts = True)[1] / flat_satellite_img.shape[0]
+
     p_and_c = zip(percentages, dominant_colors)
     p_and_c = sorted(p_and_c, reverse=True)
 
-    return p_and_c, dominant_colors
+    return p_and_c
 
 
-def block_graph(CLUSTERS: int, p_and_c) -> str:
+def block_graph(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
+    # file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
+    file_name_box = "final_v2/dominant_colors_p.png"
 
-    file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
-
-    block = np.ones((50, 50, 3), dtype='uint')
+    block = np.ones((50, 50, 3), dtype="uint")
     plt.figure(figsize=(12, 8))
-    
+
     for i in range(CLUSTERS):
+        block[:] = p_and_c[i][1][::-1]
+
         plt.subplot(1, CLUSTERS, i+1)
-        block[:] = p_and_c[i][1][::-1] 
         plt.imshow(block)
         plt.xticks([])
+        plt.xlabel(
+            str(round(p_and_c[i][0]*100, 2)) + "%"
+        )
         plt.yticks([])
-        plt.xlabel(str(round(p_and_c[i][0]*100, 2)) + '%')
 
     plt.savefig(file_name_box)
 
     return file_name_box
 
 
-def bar_chart(CLUSTERS: int, p_and_c) -> str:
+def bar_chart(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
+    # file_name_bar = "color_analysis/final_v2/dominant_colors.png"
+    file_name_bar = "final_v2/dominant_colors.png"
 
-    file_name_bar = 'color_analysis/final_v2/dominant_colors.png'
-
-    bar = np.ones((50, 500, 3), dtype='uint')
+    bar = np.ones((50, 500, 3), dtype="uint")
     plt.figure(figsize=(12, 8))
-    plt.title('Proportions of colors in the image')
+    plt.title("Proportions of colors in the image")
+
     start = 0
-    i = 1
     for p, c in p_and_c:
-        end = start + int(p * bar.shape[1])
-        if i == CLUSTERS:
-            bar[:, start:] = c[::-1]
-        else:
-            bar[:, start:end] = c[::-1]
+        end = start + (p * bar.shape[1])
+        bar[:, round(start):round(end)] = c[::-1]
         start = end
-        i += 1
 
     plt.imshow(bar)
     plt.xticks([])
     plt.yticks([])
+
     plt.savefig(file_name_bar)
 
     return file_name_bar
 
-def final_output(img_filepath, CLUSTERS: int):
 
-    file_name_final = 'color_analysis/final_v2/output.png'
+def final_output(img_filepath: str, CLUSTERS: int):
+    file_name_final = "color_analysis/final_v2/output.png"
 
     org_img = cv2.imread(img_filepath)
     rows = org_img.shape[1]
     cols = org_img.shape[0]
 
     copy = org_img.copy()
-    cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255, 255, 255), -1)
+    cv2.rectangle(
+        copy,
+        (rows//2-250, cols//2-90),
+        (rows//2+250, cols//2+110),
+        (255, 255, 255),
+        -1
+    )
 
     final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
-    cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
+    cv2.putText(
+        final,
+        "Most dominant colors in the satellite image",
+        (rows//2-230, cols//2-40),
+        cv2.FONT_HERSHEY_DUPLEX,
+        0.64,
+        (0, 0, 0),
+        1,
+        cv2.LINE_AA
+    )
 
     start = rows//2-220
     for i in range(CLUSTERS):
-        end = start+135
+        end = start + 135
         final[cols//2:cols//2+70, start:end] = p_and_c[i][1]
-        cv2.putText(final, str(i+1), (start+55, cols//2+45), cv2.FONT_HERSHEY_DUPLEX, 1 , (0, 0, 0),1 , cv2.LINE_AA)
-        start = end+20
+        cv2.putText(
+            final,
+            str(i+1),
+            (start+55, cols//2+45),
+            cv2.FONT_HERSHEY_DUPLEX,
+            1,
+            (0, 0, 0),
+            1,
+            cv2.LINE_AA
+        )
+        start = end + 20
 
     cv2.imwrite(file_name_final, final)
 
     return file_name_final
 
-def rgb_values(dominant_colors):
 
-    col_rgb = print('The RGB values for the 3 dominant colors are: ', os.linesep, dominant_colors[0], os.linesep, dominant_colors[1], os.linesep, dominant_colors[2])
-
-    return col_rgb
+def rgb_values(dominant_colors: list[Tuple[np.float64, np.ndarray]]) -> str:
+    return (
+        "The RGB values for the 3 dominant colors are: \n" +
+        str(dominant_colors[0]) + "\n" + str(dominant_colors[1]) + "\n" + str(dominant_colors[2])
+    )
 
 
 ####################################################################################################
 
-img_filepath = 'color_analysis/satellite_image.png'
+# img_filepath = "color_analysis/satellite_image.png"
+img_filepath = "satellite_image.png"
 flat_satellite_img = image_prep(img_filepath)
 
 CLUSTERS = 3
+
 p_and_c = p_and_c_analysis(flat_satellite_img, CLUSTERS)
 
-file_name_box = block_graph(CLUSTERS, p_and_c)
+file_name_box = block_graph(p_and_c, CLUSTERS)
 
 file_name_bar = bar_chart(p_and_c, CLUSTERS)
 
 file_name_final = final_output(img_filepath, CLUSTERS)
 
-dominant_colors = p_and_c_analysis(flat_satellite_img, CLUSTERS)
-col_rgb = rgb_values(dominant_colors)
-
+col_rgb = rgb_values(p_and_c)
+print(col_rgb)
 
 
 
