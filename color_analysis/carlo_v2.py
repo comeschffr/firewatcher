@@ -16,7 +16,7 @@ def image_prep(img_filepath: str):
     satellite_img = imutils.resize(satellite_img, height=200)
     print('After resizing shape --> ',satellite_img.shape)
 
-    flat_satellite_img = np.reshape(satellite_img, (-1,3))
+    flat_satellite_img = np.reshape(satellite_img, (-1, 3))
     print('After Flattening shape --> ', flat_satellite_img.shape)
 
     return flat_satellite_img
@@ -49,7 +49,7 @@ def block_graph(CLUSTERS: int, p_and_c) -> str:
         plt.imshow(block)
         plt.xticks([])
         plt.yticks([])
-        plt.xlabel(str(round(p_and_c[i][0]*100,2)) + '%')
+        plt.xlabel(str(round(p_and_c[i][0]*100, 2)) + '%')
 
     plt.savefig(file_name_box)
 
@@ -90,7 +90,7 @@ def final_output(img_filepath, CLUSTERS: int):
     cols = org_img.shape[0]
 
     copy = org_img.copy()
-    cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255), -1)
+    cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255, 255, 255), -1)
 
     final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
     cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
