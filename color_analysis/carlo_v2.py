@@ -158,5 +158,3 @@ file_name_final = final_output(img_filepath, CLUSTERS)
 col_rgb = rgb_values(p_and_c)
 print(col_rgb)
 
-
-
