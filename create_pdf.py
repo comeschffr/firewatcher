@@ -1,8 +1,8 @@
-from reportlab.lib.units import cm
-from reportlab.pdfgen.canvas import Canvas
-from reportlab.lib.utils import ImageReader
+import os
 from PIL import Image
-
+import matplotlib.pyplot as plt
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.utils import ImageReader, cm
 
 mock_graph_links = {
     "temperature":"images/temp.jpeg",
