@@ -5,10 +5,10 @@ from sklearn.cluster import KMeans
 import imutils
 import os
 
-clusters = 3
+CLUSTERS = 3
 
-satellite_img = cv2.imread('color_analysis/satellite_image.jpeg')
-org_img = satellite_img.copy()
+org_img = cv2.imread('color_analysis/satellite_image.png')
+satellite_img = org_img.copy()
 print('Original image shape --> ',satellite_img.shape)
 
 satellite_img = imutils.resize(satellite_img, height=200)
@@ -55,19 +55,18 @@ plt.imshow(bar)
 plt.xticks([])
 plt.yticks([])
 
-rows = 1000
-cols = int((org_img.shape[0]/org_img.shape[1])*rows)
-img = cv2.resize(org_img, dsize = (rows, cols), interpolation=cv2.INTER_LINEAR)
+rows = org_img.shape[1]
+cols = org_img.shape[0]
 
-copy = img.copy()
+copy = org_img.copy()
 cv2.rectangle(copy, (rows//2-250, cols//2-90), (rows//2+250, cols//2+110), (255,255,255),-1)
 
-final = cv2.addWeighted(img, 0.1, copy, 0.9, 0)
+final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
 cv2.putText(final, 'Most dominant colors in the satellite image', (rows//2-230, cols//2-40), cv2.FONT_HERSHEY_DUPLEX, 0.64, (0, 0, 0),1 ,cv2.LINE_AA)
 
 
 start = rows//2-220
-for i in range(3):
+for i in range(CLUSTERS):
     end = start+135
     final[cols//2:cols//2+70, start:end] = p_and_c[i][1]
     cv2.putText(final, str(i+1), (start+55, cols//2+45), cv2.FONT_HERSHEY_DUPLEX, 1 , (0, 0, 0),1 , cv2.LINE_AA)
