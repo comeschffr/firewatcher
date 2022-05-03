@@ -6,6 +6,9 @@ import numpy as np
 from sklearn.cluster import KMeans
 
 
+DominantColorsType = list[Tuple[np.float64, np.ndarray]]
+
+
 def image_prep(img_filepath: str) -> np.ndarray:
     org_img = cv2.imread(img_filepath)
     satellite_img = org_img.copy()
@@ -20,7 +23,7 @@ def image_prep(img_filepath: str) -> np.ndarray:
     return flat_satellite_img
 
 
-def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> list[Tuple[np.float64, np.ndarray]]:
+def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> DominantColorsType:
     kmeans = KMeans(n_clusters=CLUSTERS, random_state=0)
     kmeans.fit(flat_satellite_img)
 
@@ -34,7 +37,7 @@ def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> list[Tupl
     return p_and_c
 
 
-def block_graph(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
+def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     # file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
     file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
 
@@ -57,7 +60,7 @@ def block_graph(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> 
     return file_name_box
 
 
-def bar_chart(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
+def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     # file_name_bar = "color_analysis/final_v2/dominant_colors.png"
     file_name_bar = "color_analysis/final_v2/dominant_colors.png"
 
@@ -129,7 +132,7 @@ def final_output(img_filepath: str, CLUSTERS: int):
     return file_name_final
 
 
-def rgb_values(dominant_colors: list[Tuple[np.float64, np.ndarray]]) -> str:
+def rgb_values(dominant_colors: DominantColorsType) -> str:
     return (
         "The RGB values for the 3 dominant colors are: \n" +
         str(dominant_colors[0]) + "\n" + str(dominant_colors[1]) + "\n" + str(dominant_colors[2])
