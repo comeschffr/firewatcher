@@ -126,7 +126,7 @@ def download_file(url: str, base_filename: str, lat: float, lon: float, id: int)
     try:
         r = s.get(url, stream=True, timeout=10)
     except requests.exceptions.ConnectionError:
-        logging.critical("Could not request the image")
+        logging.error("Failed to download the image")
         return
 
     total = int(r.headers.get('content-length', 0))
@@ -145,7 +145,7 @@ def download_file(url: str, base_filename: str, lat: float, lon: float, id: int)
     return filepath
 
 
-def to_np_arr(filepath: str) -> np.array:
+def to_np_arr(filepath: str) -> np.ndarray:
     logging.info("Creating numpy array from bytes response...")
 
     with open(filepath, "rb") as f:
@@ -154,7 +154,7 @@ def to_np_arr(filepath: str) -> np.array:
     return np.array(arr.tolist())
 
 
-def to_rgb_img(arr: np.array) -> Image:
+def to_rgb_img(arr: np.ndarray) -> Image:
     arr[arr < 0] = 0
     arr[arr > 0.3] = 0.3
 
@@ -162,6 +162,21 @@ def to_rgb_img(arr: np.array) -> Image:
     img = Image.fromarray(rgb_img, 'RGB')
 
     return img
+
+
+def get_weather_data(lat: float, lon:float):
+        weather_url = "https://api.openweathermap.org/data/2.5/onecall"
+        parameters = {
+            'lat': lat,
+            'lon': lon,
+            'exclude': "minutely,hourly",
+            'appid': "4b62311580df9e696fb322cf5208c520",
+            'units': "metric"
+        }
+
+        r = requests.get(weather_url, params=parameters)
+
+        return r.json()
 
 
 if __name__=="__main__":
@@ -194,3 +209,6 @@ if __name__=="__main__":
     img2 = to_rgb_img(arr2)
     img2.show()
     img2.save(filepath2.replace("arr", "png"))
+
+    weather_json = get_weather_data(lat, lon)
+    print(weather_json)
