@@ -36,7 +36,7 @@ def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> list[Tupl
 
 def block_graph(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
     # file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
-    file_name_box = "final_v2/dominant_colors_p.png"
+    file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
 
     block = np.ones((50, 50, 3), dtype="uint")
     plt.figure(figsize=(12, 8))
@@ -59,7 +59,7 @@ def block_graph(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> 
 
 def bar_chart(p_and_c: list[Tuple[np.float64, np.ndarray]], CLUSTERS: int) -> str:
     # file_name_bar = "color_analysis/final_v2/dominant_colors.png"
-    file_name_bar = "final_v2/dominant_colors.png"
+    file_name_bar = "color_analysis/final_v2/dominant_colors.png"
 
     bar = np.ones((50, 500, 3), dtype="uint")
     plt.figure(figsize=(12, 8))
@@ -139,7 +139,7 @@ def rgb_values(dominant_colors: list[Tuple[np.float64, np.ndarray]]) -> str:
 ####################################################################################################
 
 # img_filepath = "color_analysis/satellite_image.png"
-img_filepath = "satellite_image.png"
+img_filepath = "color_analysis/satellite_image.png"
 flat_satellite_img = image_prep(img_filepath)
 
 CLUSTERS = 3
