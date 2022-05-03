@@ -113,6 +113,8 @@ def rgb_values(dominant_colors):
     return col_rgb
 
 
+####################################################################################################
+
 img_filepath = 'color_analysis/satellite_image.png'
 flat_satellite_img = image_prep(img_filepath)
 
