@@ -7,41 +7,7 @@ from reportlab.lib.units import cm
 
 example_data = [100, 120, 134] #change
 
-
-class FireWatcher_Report():
-    
-    def __init__(self, folder_path):
-        self.rain_chart_path = ""
-        self.temperature_chart_path = ""
-        self.wind_chart_path = ""
-        self.title = ""
-        
-    def __create_rain_chart(self) -> int:
-        
-        pass
-
-    def __create_temp_chart(self) -> int:
-        
-        pass
-
-    def __create_wind_chart(self) -> int:
-        
-        pass
-
-    def create_pdf_report(self) -> str:
-        
-        report_path = ""
-
-        # create charts
-        self.rain_chart_path = self.__create_rain_chart()
-        # etc..
-
-        # create pdf file
-        return report_path
-
-
-
-def create_barchart(data, type: str) -> str:
+def create_barchart(data, chart_type: str) -> str:
 
     '''
     Creates a bar chart with the input data (format TBD)
@@ -50,20 +16,13 @@ def create_barchart(data, type: str) -> str:
     '''
     timestamp = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
     output_path = os.path.join("images/", type + timestamp + ".png")
-    days_label = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8'] # change
-    chart_data = data # TO avoid altering the var being passed
     dataset_size = len(data)
-
-    if dataset_size>8:
-        chart_data = data[:8]
-
-    elif dataset_size<8:
-        days_label = days_label[:dataset_size]
-
+    days_label = [f"D{i}" for i in range(1, dataset_size+1)]
+    
     fig = plt.figure()
     
     plt.title(str(dataset_size) + '-day ' + type + ' Forecast')
-    plt.bar(days_label, chart_data)
+    plt.bar(days_label, data)
     plt.xlabel('Days')
     plt.ylabel(type + ' Level')
     plt.savefig(output_path)
@@ -122,19 +81,3 @@ def create_pdf_report():
     canvas.save()
 
     return None
-
-create_pdf_report()
-
-#todo
-    # Charts
-        # Decide on which dataype to use to pass argument
-            # Simples list
-            # WeatherData object (create)
-        # Decide on whether to create a generic functoin to handle
-        # all types of graphics (to use with an *args wrapper)
-    # PDF
-        # Finish drawing the images and strings in the 
-        # agreed upon layout
-    # Scoring Formula
-        # TBD
-    # 
