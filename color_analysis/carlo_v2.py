@@ -28,8 +28,8 @@ p_and_c = sorted(p_and_c, reverse=True)
 
 block = np.ones((50, 50, 3), dtype='uint')
 plt.figure(figsize=(12, 8))
-for i in range(clusters):
-    plt.subplot(1, clusters, i+1)
+for i in range(CLUSTERS ):
+    plt.subplot(1, CLUSTERS, i+1)
     block[:] = p_and_c[i][1][::-1] 
     plt.imshow(block)
     plt.xticks([])
@@ -44,7 +44,7 @@ start = 0
 i = 1
 for p, c in p_and_c:
     end = start+int(p*bar.shape[1])
-    if i==clusters:
+    if i==CLUSTERS:
         bar[:, start:] = c[::-1]
     else:
         bar[:, start:end] = c[::-1]
