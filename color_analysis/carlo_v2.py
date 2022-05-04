@@ -13,13 +13,13 @@ DominantColorsType = list[Tuple[np.float64, np.ndarray]]
 def image_prep(img_filepath: str) -> np.ndarray:
     org_img = cv2.imread(img_filepath)
     satellite_img = org_img.copy()
-    logging.info(f"Original image shape --> {satellite_img.shape}")
+    print(f"Original image shape --> {satellite_img.shape}")
 
     satellite_img = cv2.resize(satellite_img, (200, 200), interpolation=cv2.INTER_AREA)
-    logging.info(f"After resizing shape --> {satellite_img.shape}")
+    print(f"After resizing shape --> {satellite_img.shape}")
 
     flat_satellite_img = np.reshape(satellite_img, (-1, 3))
-    logging.info(f"After Flattening shape --> {flat_satellite_img.shape}")
+    print(f"After Flattening shape --> {flat_satellite_img.shape}")
 
     return flat_satellite_img
 
@@ -32,9 +32,17 @@ def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> DominantC
 
     percentages = np.unique(kmeans.labels_, return_counts = True)[1] / flat_satellite_img.shape[0]
 
+    p_and_c = [
+        {
+            'percent': percent,
+            'rgb': rgb,
+        } for percent, rgb in sorted(zip(percentages, dominant_colors), reverse=True)
+    ]
+    print(p_and_c)
     p_and_c = zip(percentages, dominant_colors)
     p_and_c = sorted(p_and_c, reverse=True)
 
+    # print(p_and_c)
     return p_and_c
 
 
@@ -90,16 +98,16 @@ def final_output(img_filepath: str, CLUSTERS: int):
     rows = org_img.shape[1]
     cols = org_img.shape[0]
 
-    copy = org_img.copy()
+    final = org_img.copy()
     cv2.rectangle(
-        copy,
+        final,
         (rows//2-250, cols//2-90),
         (rows//2+250, cols//2+110),
         (255, 255, 255),
         -1
     )
 
-    final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
+    # final = cv2.addWeighted(org_img, 0.1, copy, 0.9, 0)
     cv2.putText(
         final,
         "Most dominant colors in the satellite image",
@@ -156,5 +164,5 @@ file_name_bar = bar_chart(p_and_c, CLUSTERS)
 file_name_final = final_output(img_filepath, CLUSTERS)
 
 col_rgb = rgb_values(p_and_c)
-print(col_rgb)
+# print(col_rgb)
 
