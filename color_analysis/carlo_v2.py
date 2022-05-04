@@ -1,3 +1,4 @@
+import logging
 from typing import Tuple
 
 import cv2
@@ -12,13 +13,13 @@ DominantColorsType = list[Tuple[np.float64, np.ndarray]]
 def image_prep(img_filepath: str) -> np.ndarray:
     org_img = cv2.imread(img_filepath)
     satellite_img = org_img.copy()
-    print("Original image shape --> ", satellite_img.shape)
+    logging.info(f"Original image shape --> {satellite_img.shape}")
 
     satellite_img = cv2.resize(satellite_img, (200, 200), interpolation=cv2.INTER_AREA)
-    print("After resizing shape --> ", satellite_img.shape)
+    logging.info(f"After resizing shape --> {satellite_img.shape}")
 
     flat_satellite_img = np.reshape(satellite_img, (-1, 3))
-    print("After Flattening shape --> ", flat_satellite_img.shape)
+    logging.info(f"After Flattening shape --> {flat_satellite_img.shape}")
 
     return flat_satellite_img
 
@@ -39,7 +40,7 @@ def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> DominantC
 
 def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
-
+   
     block = np.ones((50, 50, CLUSTERS), dtype="uint")
     plt.figure(figsize=(12, 8))
 
@@ -61,6 +62,7 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
 
 def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     file_name_bar = "color_analysis/final_v2/dominant_colors.png"
+    
 
     bar = np.ones((50, 500, CLUSTERS), dtype="uint")
     plt.figure(figsize=(12, 9))
@@ -82,7 +84,7 @@ def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
 
 
 def final_output(img_filepath: str, CLUSTERS: int):
-    file_name_final = "color_analysis/final_v2/output.png"
+    file_name_final = "color_analysis/final_v2/output2.png"
 
     org_img = cv2.imread(img_filepath)
     rows = org_img.shape[1]
@@ -140,6 +142,7 @@ def rgb_values(dominant_colors: DominantColorsType) -> str:
 ####################################################################################################
 
 img_filepath = "color_analysis/satellite_image.png"
+# img_filepath = "satellite_image.png"
 flat_satellite_img = image_prep(img_filepath)
 
 CLUSTERS = 3
