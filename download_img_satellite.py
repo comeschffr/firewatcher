@@ -175,9 +175,28 @@ def get_weather_data(lat: float, lon:float):
         }
 
         r = requests.get(weather_url, params=parameters)
+        req_data = r.json()
+        print(req_data)
 
-        return r.json()
+        data = {
+            'dates': [],
+            'temperature': [],
+            'humidity': [],
+            'wind': [],
+            'rain': [],
+            'rain_p': [],
+            'sunlight': [],
+        }
+        for day in req_data['daily']:
+            data['dates'].append(datetime.fromtimestamp(day['dt']))
+            data['temperature'].append(day['temp']['day'])
+            data['humidity'].append(day['humidity'])
+            data['wind'].append(day['wind_speed'])
+            data['rain_p'].append(day['pop'])
+            data['rain'].append(day.get('rain', 0))
+            data['sunlight'].append(day['uvi'])
 
+        return data
 
 if __name__=="__main__":
     initialize_gee()
@@ -211,4 +230,3 @@ if __name__=="__main__":
     img2.save(filepath2.replace("arr", "png"))
 
     weather_json = get_weather_data(lat, lon)
-    print(weather_json)
