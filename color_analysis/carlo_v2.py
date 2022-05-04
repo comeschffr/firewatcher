@@ -84,7 +84,7 @@ def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
 
 
 def final_output(img_filepath: str, CLUSTERS: int):
-    file_name_final = "color_analysis/final_v2/output2.png"
+    file_name_final = "color_analysis/final_v2/output.png"
 
     org_img = cv2.imread(img_filepath)
     rows = org_img.shape[1]
