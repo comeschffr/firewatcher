@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.units import cm
+from reportlab.lib.pagesizes import A4
 
 
 mock_data = {
@@ -28,7 +29,9 @@ mock_data = {
 }
 
 
-mock_graph_links = {
+mock_graph_paths = {
+    "img_sat-1": "resources/satelite.png",
+    "img_sat-2": "resources/satelite.png",
     "temperature":"resources/temperature_chart.png",
     "rain": "resources/hum_rain_chart.png",
     "sunlight": "resources/wind_chart.png",
@@ -111,45 +114,61 @@ create_sunlight_chart(mock_data)
 print(" All charts created!")
 
 
-def resize_and_convert(path, newsize = (250,250)):
+def resize_and_convert_image(path: str, newsize = (250,250)) -> ImageReader:
     img_PIL = Image.open(path)
     img_PIL = img_PIL.resize(newsize)
     img_RL = ImageReader(img_PIL)
+
     return img_RL
 
-def create_pdf_report(graphs_link: dict) -> None:
+def create_pdf_report(graphs_link: dict, file_name: str) -> str:
+    page_size = A4
     margin_x = 1 * cm
-    page_size = (21 * cm, 29.7 * cm)
+    margin_y = 1 * cm
     page_height = page_size[1]
-    size = 30
-    buffer = 1 * cm
+    title_size = 20
+    buffer_horizontal = 1 * cm
+    buffer_vertical = 1 * cm
+    chart_size = 250
 
-    img = Image.open('images/76e9e3ba_38.219693_-94.259806_05-03-2022_181759_1.png')
-    newsize = (250, 250)
-    img2= img.resize(newsize)
-    img3 = ImageReader(img2)
-
-    canvas = Canvas("output_pdf.pdf", pagesize=page_size) # Change
-    canvas.setFont("Helvetica", size)
-    canvas.drawCentredString(page_size[0]/2.0, page_size[1]-50, "FireWatch Report")
+    # Create PDF object
+    output_pdf = Canvas(file_name + ".pdf", pagesize=page_size)
+    output_pdf.setFont("Helvetica-Bold", title_size)
+    output_pdf.drawCentredString(page_size[0]/2.0, page_height - margin_y, "FireWatcher Report")
 
     # Add Images
-    canvas.drawImage(img3, margin_x, page_height-350)
+    img_sat_1 = resize_and_convert_image(graphs_link.get('img_sat-1'), (chart_size, chart_size))
+    output_pdf.drawImage(img_sat_1, 
+                        margin_x,  # x_pos
+                        page_height - margin_y - buffer_vertical - chart_size) # y_pos
 
-    img_temp = resize_and_convert(graphs_link.get('temperature'))
-    canvas.drawImage(img_temp, margin_x, page_height-570)
+    img_sat_2 = resize_and_convert_image(graphs_link.get('img_sat-2'), (chart_size, chart_size))
+    output_pdf.drawImage(img_sat_2, 
+                        margin_x + chart_size + buffer_horizontal, # x_pos
+                        page_height - margin_y - buffer_vertical - chart_size) # y_pos
+
+    img_temp = resize_and_convert_image(graphs_link.get('temperature'), (chart_size, chart_size))
+    output_pdf.drawImage(img_temp, 
+                        margin_x,
+                        page_height-570)
     
-    img_rain = resize_and_convert(graphs_link.get('rain'))
-    canvas.drawImage(img_rain, margin_x+250+buffer, page_height-570)
+    img_rain = resize_and_convert_image(graphs_link.get('rain'),(chart_size, chart_size))
+    output_pdf.drawImage(img_rain, 
+                        margin_x+250+buffer_vertical, 
+                        page_height-570)
 
-    img_wind = resize_and_convert(graphs_link.get('wind'))
-    canvas.drawImage(img_wind, margin_x, page_height-570-250)
+    img_wind = resize_and_convert_image(graphs_link.get('wind'), (chart_size, chart_size))
+    output_pdf.drawImage(img_wind,
+                        margin_x,
+                        page_height-570-250)
 
-    img_sunlight = resize_and_convert(graphs_link.get('sunlight'))
-    canvas.drawImage(img_sunlight, margin_x+250+buffer, page_height-570-250)
+    img_sunlight = resize_and_convert_image(graphs_link.get('sunlight'), (chart_size, chart_size))
+    output_pdf.drawImage(img_sunlight, 
+                        margin_x+250+buffer_vertical,
+                        page_height-570-250)
     
-    canvas.save()
+    output_pdf.save()
 
-    return
+    return file_name
 
-create_pdf_report(mock_graph_links)
+create_pdf_report(mock_graph_paths, "pdf_tests/" + datetime.now().strftime("%H-%M-%S"))
