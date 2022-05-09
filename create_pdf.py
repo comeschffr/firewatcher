@@ -28,6 +28,12 @@ mock_data = {
     'wind': [5.32, 8.74, 6.06, 7.42, 9.51, 11.19, 8.36, 7.54],
 }
 
+mock_location_data = {
+    "latitude": 34.5432,
+    "longitude": 37.5995,
+    "date_image_1": "05/08/2021",
+    "date_image_1": "05/11/2021"
+}
 
 mock_graph_paths = {
     "img_sat-1": "resources/satelite.png",
@@ -122,6 +128,7 @@ def resize_and_convert_image(path: str, newsize = (250,250)) -> ImageReader:
     return img_RL
 
 def create_pdf_report(graphs_link: dict, file_name: str) -> str:
+    # Document Variables - pass as a dict?
     page_size = A4
     margin_x = 1 * cm
     margin_y = 1 * cm
@@ -129,43 +136,74 @@ def create_pdf_report(graphs_link: dict, file_name: str) -> str:
     title_size = 20
     buffer_horizontal = 1 * cm
     buffer_vertical = 1 * cm
-    chart_size = 250
+    map_size = 200 
+    chart_size = 220
+    section_buffer = 3.5 * cm
+    text_box_border_top = 0.5 * cm
+    text_box_border_left = 0.25 * cm
+    text_box_height = 3.5 * cm 
 
     # Create PDF object
     output_pdf = Canvas(file_name + ".pdf", pagesize=page_size)
+    
+    # Add titles and text
+    output_pdf.setLineWidth(2)
     output_pdf.setFont("Helvetica-Bold", title_size)
-    output_pdf.drawCentredString(page_size[0]/2.0, page_height - margin_y, "FireWatcher Report")
+    output_pdf.drawCentredString(page_size[0]/2.0, page_height - margin_y - buffer_vertical/2, "FireWatcher Report")
+
+    output_pdf.rect(
+                    margin_x + map_size*2 + buffer_horizontal, #x_pos
+                    page_height - margin_y - buffer_vertical - map_size,
+                    4*cm,
+                    map_size,
+                    stroke = 1
+    )
+
+    text_coordinates = output_pdf.beginText()
+    text_coordinates.setTextOrigin(
+                                margin_x + map_size*2 + buffer_horizontal + text_box_border_left, #x_pos
+                                page_height - margin_y - buffer_vertical - text_box_border_top
+    )
+    text_coordinates.setFont('Helvetica', 12)
+    text_coordinates.textLine("Latitude: " + str(graphs_link.get("latitude")))
+    text_coordinates.textLine("Longitude: " + str(graphs_link.get("longitude")))
+    text_coordinates.textLine("Picture 1 Date")
+    text_coordinates.textLine(str(mock_location_data.get("date_image_1")))
+    text_coordinates.textLine("Picture 2 Date")
+    text_coordinates.textLine(str(mock_location_data.get("date_image_2")))
+    text_coordinates.textLine("Danger Score: 71")
+    output_pdf.drawText(text_coordinates)
 
     # Add Images
-    img_sat_1 = resize_and_convert_image(graphs_link.get('img_sat-1'), (chart_size, chart_size))
+    img_sat_1 = resize_and_convert_image(graphs_link.get('img_sat-1'), (map_size, map_size))
     output_pdf.drawImage(img_sat_1, 
                         margin_x,  # x_pos
-                        page_height - margin_y - buffer_vertical - chart_size) # y_pos
+                        page_height - margin_y - buffer_vertical - map_size) # y_pos
 
-    img_sat_2 = resize_and_convert_image(graphs_link.get('img_sat-2'), (chart_size, chart_size))
+    img_sat_2 = resize_and_convert_image(graphs_link.get('img_sat-2'), (map_size, map_size))
     output_pdf.drawImage(img_sat_2, 
-                        margin_x + chart_size + buffer_horizontal, # x_pos
-                        page_height - margin_y - buffer_vertical - chart_size) # y_pos
+                        margin_x + map_size + buffer_horizontal/2, # x_pos
+                        page_height - margin_y - buffer_vertical - map_size) # y_pos
 
     img_temp = resize_and_convert_image(graphs_link.get('temperature'), (chart_size, chart_size))
     output_pdf.drawImage(img_temp, 
-                        margin_x,
-                        page_height-570)
+                        margin_x + buffer_horizontal,
+                        page_height - buffer_vertical*3 - chart_size*2 - section_buffer)
     
     img_rain = resize_and_convert_image(graphs_link.get('rain'),(chart_size, chart_size))
     output_pdf.drawImage(img_rain, 
-                        margin_x+250+buffer_vertical, 
-                        page_height-570)
+                        margin_x + chart_size + buffer_vertical + + buffer_horizontal, 
+                        page_height - buffer_vertical*3 - chart_size*2 - section_buffer)
 
     img_wind = resize_and_convert_image(graphs_link.get('wind'), (chart_size, chart_size))
     output_pdf.drawImage(img_wind,
-                        margin_x,
-                        page_height-570-250)
+                        margin_x + + buffer_horizontal,
+                        page_height - buffer_vertical*3 - chart_size*3 - section_buffer)
 
     img_sunlight = resize_and_convert_image(graphs_link.get('sunlight'), (chart_size, chart_size))
     output_pdf.drawImage(img_sunlight, 
-                        margin_x+250+buffer_vertical,
-                        page_height-570-250)
+                        margin_x + chart_size + buffer_vertical + + buffer_horizontal,
+                        page_height - buffer_vertical*3 - chart_size*3 - section_buffer)
     
     output_pdf.save()
 
