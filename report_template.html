@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+</title>
+<style>
+body {background-color:#ffffff;background-repeat:no-repeat;background-position:top left;background-attachment:fixed;}
+date {display: table-cell; text-align: center; padding: 0.5cm; border: 1pt dotted black;}
+</style>
+</head>
+<body>
+<h1 style="font-size: 40px; text-align: center; font-family: sans-serif;">FireWatcher Report</h1>
+<div style="display: table; margin: 0 auto; width: 21cm; height: 3cm; background-color: lightgrey;">
+    <div style="display: table-row">
+        <div style="display: table-cell; padding: 0.5cm; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: medium">Latitude: {{ latitude }} </div>
+    </div>
+    <div style="display: table-row"></div>
+        <div style="display: table-cell; padding: 0.5cm; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: medium;">Longitude: {{ longitude }} </div>
+    </div>
+</div>
+<div style="display: table; border-spacing: 2px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="display: table-row">
+        <div style = "display: table-cell; text-align: center; padding: 0.5cm; border: 1pt dotted black;"> {{ date_image_1 }} </div>
+        <div style = "display: table-cell; text-align: center; padding: 0.5cm; border: 1pt dotted black;"> {{ date_image_2 }} </div>
+    </div>
+    <div style="display: table-row">
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ satelite_1 }}" width="300px" height = "300px"> </div>
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ satelite_2 }}" width="300px" height = "300px"> </div>
+</div>
+    <div style="display: table-row">
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ satelite_1_color }}" width="300px" height = "300px"> </div>
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ satelite_2_color }}" width="300px" height = "300px"> </div>
+    </div>
+</div>
+<div style="display: table; border-spacing: 2px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="display: table-row">
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ temp_chart }}" width="300px" height = "300px"> </div>
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ rain_chart }}" width="300px" height = "300px"> </div>
+</div>
+    <div style="display: table-row">
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ sunlight_chart }}" width="300px" height = "300px"> </div>
+        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ wind_chart }}" width="300px" height = "300px"> </div>
+    </div>
+</div>
+</body>
+</html>
