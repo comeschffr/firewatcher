@@ -59,7 +59,7 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
         plt.imshow(block)
         plt.xticks([])
         plt.xlabel(
-            str(round(p_and_c[i][0]*100, 2)) + "%"
+            str(round(p_and_c[i][0]*100, 2)) + "%", fontsize = 20
         )
         plt.yticks([])
 
