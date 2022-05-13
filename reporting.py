@@ -4,7 +4,6 @@ import datetime
 import pdfkit
 import jinja2
 
-
 HTML_TEMPLATE_PATH = "report_template.html"
 
 images = {
@@ -64,18 +63,15 @@ class PDFReport():
         config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
         pdfkit.from_string(html_str, self.file_name, configuration=config)
 
-    def create_report(self) -> None:
+    def make_report(self) -> None:
         self.__load_template()
         self.__convert_images_to_byte64()
+        self.__images.update({"timestamp" : datetime.datetime.now().strftime("%m/%d/%Y")})
         html_str = self.template.render(self.__images | self.__weather_data)
         self.__convert_html_to_pdf(html_str)
 
-# Testing
-# Decide on how to implement input to add image
-# either through dict or kwargs
-
 def main():
-    report = PDFReport(weather_data = mock_location_data,file_name="pdf_tests/"+datetime.datetime.now().strftime("%H%M%S") + ".pdf")
+    report = PDFReport(weather_data = mock_location_data,file_name="pdf_tests/"+datetime.datetime.now().strftime("%H-%M-%S") + ".pdf")
     report.add_image("satelite_1", images.get("satelite_1"))
     report.add_image("satelite_2", images.get("satelite_2"))
     report.add_image("satelite_1_color", images.get("satelite_1_color"))
@@ -84,8 +80,7 @@ def main():
     report.add_image("rain_chart", images.get("rain_chart"))
     report.add_image("sunlight_chart", images.get("sunlight_chart"))
     report.add_image("wind_chart", images.get("wind_chart"))
-    report.create_report()
+    report.make_report()
 
 if __name__ == "__main__":
     main()
-
