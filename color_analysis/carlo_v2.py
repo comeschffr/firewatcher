@@ -63,7 +63,7 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
         )
         plt.yticks([])
 
-    plt.savefig(file_name_box, fontsize = 20)
+    plt.savefig(file_name_box, format = 'eps')
 
     return file_name_box
 
