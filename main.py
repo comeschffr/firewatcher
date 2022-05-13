@@ -41,7 +41,7 @@ if __name__=="__main__":
     # lat, lon = 45.5, 9.2 # perform tests on user input
     # lat, lon = 41.85, -87.65 # perform tests on user input
 
-    with open('welcome_banner.txt', encoding='utf8') as f:
+    with open(config['DEFAULT']['welcome_banner'], encoding='utf8') as f:
         contents = f.read()
         print(
             contents
@@ -65,6 +65,8 @@ if __name__=="__main__":
         path = data.weather_data.make_humidity_rain_chart()
         path = data.weather_data.make_wind_chart()
         path = data.weather_data.make_sunlight_chart()
+        
+        
 
     final_report_path = "fp.pdf"
     final_report = FinalReport(final_report_path)
