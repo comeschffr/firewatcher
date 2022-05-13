@@ -47,7 +47,7 @@ def p_and_c_analysis(flat_satellite_img: np.ndarray, CLUSTERS: int) -> DominantC
 
 
 def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
-    file_name_box = "color_analysis/final_v2/dominant_colors_p.png"
+    file_name_box = "color_analysis/final_v2/dominant_colors_p.eps"
    
     block = np.ones((50, 50, CLUSTERS), dtype="uint")
     plt.figure(figsize=(12, 8))
@@ -59,17 +59,17 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
         plt.imshow(block)
         plt.xticks([])
         plt.xlabel(
-            str(round(p_and_c[i][0]*100, 2)) + "%"
+            str(round(p_and_c[i][0]*100, 2)) + "%", fontsize = 20
         )
         plt.yticks([])
 
-    plt.savefig(file_name_box)
+    plt.savefig(file_name_box, format = 'eps')
 
     return file_name_box
 
 
 def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
-    file_name_bar = "color_analysis/final_v2/dominant_colors.png"
+    file_name_bar = "color_analysis/final_v2/dominant_colors.eps"
     
 
     bar = np.ones((50, 500, CLUSTERS), dtype="uint")
@@ -86,7 +86,7 @@ def bar_chart(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     plt.xticks([])
     plt.yticks([])
 
-    plt.savefig(file_name_bar)
+    plt.savefig(file_name_bar, format = 'eps')
 
     return file_name_bar
 
