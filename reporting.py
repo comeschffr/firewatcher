@@ -72,7 +72,7 @@ class FireWatcher_Report():
         self._images.update({"timestamp" : datetime.datetime.now().strftime("%m/%d/%Y")})
         html_str = self.template.render(self._images | self._weather_data)
       
-        with open(self.file_name + ".html", "w") as f:
+        with open(self.file_name, "w") as f:
             f.write(html_str)
             f.close()
 
