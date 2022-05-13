@@ -9,7 +9,7 @@ from sklearn.cluster import KMeans
 
 
 class SatelliteImage():
-    def __init__(self, np_arr_filename: str, date: datetime):
+    def __init__(self, np_arr_filename: str, date: datetime) -> None:
         self.NB_CLUSTERS = 3
         self.date = date
         self.np_arr_filename = np_arr_filename

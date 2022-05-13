@@ -1,4 +1,5 @@
 import logging
+import math
 import uuid
 from datetime import datetime
 
@@ -12,7 +13,7 @@ from image_analysis import SatelliteImage
 
 
 class CollectedData():
-    def __init__(self, lat: float, lon: float):
+    def __init__(self, lat: float, lon: float, weather_api_key: str) -> None:
         if not getattr(self, 'established', False):
             self.initialize_gee()
         self.lat = lat
@@ -37,7 +38,7 @@ class CollectedData():
             )
             self.imgs.append(new_img)
 
-        self.weather_data = WeatherData(self.lat, self.lon)
+        self.weather_data = WeatherData(self.lat, self.lon, weather_api_key)
 
     def initialize_gee(self) -> None:
         # ee.Authenticate()
@@ -175,11 +176,62 @@ class CollectedData():
 
         return self.arrs_filename
 
+    def _get_index(self, avg_metric, scale):
+        for i, threshold in enumerate(scale):
+            if avg_metric < threshold:
+                return i
+        return len(scale)
+
+    def compute_risk(self) -> float:
+        self.dryness_index = []
+        for color1, color2 in zip(self.imgs[0].p_and_c, self.imgs[1].p_and_c):
+            r1, r2 = color1['rgb'][0].item(), color2['rgb'][0].item()
+            g1, g2 = color1['rgb'][1].item(), color2['rgb'][1].item()
+            _dryness = (1 + (r1 - r2) / r2) * (1 + (g2 - g1) / g1)
+            self.dryness_index.append(_dryness)
+        print("Dryness index:", self.dryness_index)
+
+        _avg_wind = sum(self.weather_data.wind) / len(self.weather_data.wind)
+        _beaufort_scale = [0.5, 1.5, 3.3, 5.5, 7.9, 10.7, 13.8, 17.1, 20.7, 24.4, 28.4, 32.6]
+        self.wind_index = (self._get_index(_avg_wind, _beaufort_scale) + 1) / len(_beaufort_scale)
+        print("Wind index:", self.wind_index)
+        
+        self.humidity_index = sum(self.weather_data.humidity) / len(self.weather_data.humidity)
+        self.humidity_index = 1 - self.humidity_index / 100
+        print("Humidity index:", self.humidity_index)
+        
+        _avg_rain = sum(self.weather_data.rain) / len(self.weather_data.rain)
+        _rainfall_classification = [10, 35.5, 64.4, 124.4]
+        self.rain_index = 1 - self._get_index(_avg_rain, _rainfall_classification) / len(_rainfall_classification)
+        print("Rain index:", self.rain_index)
+        
+        _avg_temp = sum(self.weather_data.temperature) / len(self.weather_data.temperature)
+        _temp_classification = [4.1, 8.0, 13.0, 18.0, 23.0, 29.0, 35.0, 41.0]
+        self.temp_index = (self._get_index(_avg_temp, _temp_classification) + 1) / len(_temp_classification)
+        print("Temp index:", self.temp_index)
+        
+        self.sunlight_index = sum(self.weather_data.sunlight) / len(self.weather_data.sunlight)
+        self.sunlight_index /= 11
+        print("Sunlight index:", self.sunlight_index)
+
+        print(math.prod(self.dryness_index))
+        self.overall_risk = (
+            math.prod(self.dryness_index)
+            * self.wind_index
+            * self.humidity_index
+            * self.rain_index
+            * self.temp_index
+            * self.sunlight_index
+        ) 
+
+        return self.overall_risk
+
 
 class WeatherData():
-    def __init__(self, lat: float, lon: float) -> None:
+    def __init__(self, lat: float, lon: float, api_key: str) -> None:
         self.lat = lat
         self.lon = lon
+        self.api_key = api_key
         self.get_and_set_data_from_api()
 
     def get_and_set_data_from_api(self) -> None:
@@ -188,7 +240,7 @@ class WeatherData():
             'lat': self.lat,
             'lon': self.lon,
             'exclude': "current,minutely,hourly",
-            'appid': "4b62311580df9e696fb322cf5208c520",
+            'appid': self.api_key,
             'units': "metric"
         }
         r = requests.get(weather_url, params=parameters)
