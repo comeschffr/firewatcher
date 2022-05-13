@@ -1,12 +1,11 @@
 import os
 import base64
 import datetime
-import pdfkit
 import jinja2
 
 HTML_TEMPLATE_PATH = "report_template.html"
 
-images = {
+mock_images = {
     'satelite_1': 'images/satelite_1.png',
     'satelite_2': 'images/satelite_2.png',
     'satelite_1_color' : 'images/color.png',
@@ -24,7 +23,7 @@ mock_location_data = {
     "date_image_2": "05/11/2021"
 }
 
-class PDFReport():
+class FireWatcher_Report():
     def __init__(self, 
                 file_name: str = None,
                 images: dict = None, 
@@ -32,55 +31,64 @@ class PDFReport():
                 template_path: str = HTML_TEMPLATE_PATH,
                 ):
         self.template_path = template_path
-        self.__images = images or {}
-        self.__weather_data = weather_data or {}
-        self.file_name = file_name or self.__timestamp() + ".pdf"
+        self._images = images or {}
+        self._weather_data = weather_data or {}
+        self.file_name = self._name_file(file_name)
         self.template = None
 
     def add_image(self, img_label: str, img_path: str) -> None:
-        self.__images[img_label] = img_path
+        self._images[img_label] = img_path
 
-    def __timestamp(self) -> None:
+    def _timestamp(self) -> str:
         
-        return datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        return datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
-    def __image_file_path_to_base64_string(self, filepath: str) -> str:
+    def _name_file(self, file_name: str) -> str:
+        if file_name is None:
+            return self._timestamp() + ".html"
+
+        if file_name[-5] == ".html":
+            return file_name
+        
+        return file_name + ".html"
+
+    def _image_file_path_to_base64_string(self, filepath: str) -> str:
         with open(filepath, 'rb') as f:
 
             return base64.b64encode(f.read()).decode()
     
-    def __convert_images_to_byte64(self) -> None:
-        for image in self.__images:
-            self.__images.update({image : self.__image_file_path_to_base64_string(os.path.abspath(str(self.__images[image])))})
+    def _convert_images_to_byte64(self) -> None:
+        for image in self._images:
+            self._images.update({image : self._image_file_path_to_base64_string(os.path.abspath(str(self._images[image])))})
 
-    def __load_template(self) -> None:
+    def _load_template(self) -> None:
         templateLoader = jinja2.FileSystemLoader(searchpath="./")
         templateEnv = jinja2.Environment(loader=templateLoader)
         self.template = templateEnv.get_template(self.template_path)
 
-    def __convert_html_to_pdf(self, html_str: str) -> None:
-        path_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-        config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-        pdfkit.from_string(html_str, self.file_name, configuration=config)
+    def make_report(self) -> str:
+        self._load_template()
+        self._convert_images_to_byte64()
+        self._images.update({"timestamp" : datetime.datetime.now().strftime("%m/%d/%Y")})
+        html_str = self.template.render(self._images | self._weather_data)
+      
+        with open(self.file_name + ".html", "w") as f:
+            f.write(html_str)
+            f.close()
 
-    def make_report(self) -> None:
-        self.__load_template()
-        self.__convert_images_to_byte64()
-        self.__images.update({"timestamp" : datetime.datetime.now().strftime("%m/%d/%Y")})
-        html_str = self.template.render(self.__images | self.__weather_data)
-        self.__convert_html_to_pdf(html_str)
+        return os.path.abspath(self.file_name)
 
 def main():
-    report = PDFReport(weather_data = mock_location_data,file_name="pdf_tests/"+datetime.datetime.now().strftime("%H-%M-%S") + ".pdf")
-    report.add_image("satelite_1", images.get("satelite_1"))
-    report.add_image("satelite_2", images.get("satelite_2"))
-    report.add_image("satelite_1_color", images.get("satelite_1_color"))
-    report.add_image("satelite_2_color", images.get("satelite_2_color"))
-    report.add_image("temp_chart", images.get("temp_chart"))
-    report.add_image("rain_chart", images.get("rain_chart"))
-    report.add_image("sunlight_chart", images.get("sunlight_chart"))
-    report.add_image("wind_chart", images.get("wind_chart"))
-    report.make_report()
+    
+    # passing the ready-made dictionary thorugh the constructor
+    report = FireWatcher_Report(weather_data = mock_location_data, images = mock_images)
+    
+    # initiating w/o images and adding them after
+
+    #for img in images:
+     #   report.add_image(img, images[img])
+
+    print(report.make_report())
 
 if __name__ == "__main__":
     main()
