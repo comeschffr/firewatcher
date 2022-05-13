@@ -50,7 +50,7 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
     file_name_box = "color_analysis/final_v2/dominant_colors_p.eps"
    
     block = np.ones((50, 50, CLUSTERS), dtype="uint")
-    plt.figure(figsize=(12, 8))
+    plt.figure(figsize=(16, 8))
 
     for i in range(CLUSTERS):
         block[:] = p_and_c[i][1][::-1]
@@ -63,7 +63,7 @@ def block_graph(p_and_c: DominantColorsType, CLUSTERS: int) -> str:
         )
         plt.yticks([])
 
-    plt.savefig(file_name_box, format = 'eps')
+    plt.savefig(file_name_box, fontsize = 20)
 
     return file_name_box
 
