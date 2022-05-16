@@ -1,0 +1,10 @@
+earthengine_api==0.1.305
+ee==0.4
+Jinja2==3.1.1
+matplotlib==3.5.1
+numpy==1.22.2
+opencv_python==4.5.5.64
+Pillow==9.1.0
+requests==2.27.1
+scikit_learn==1.1.0
+tqdm==4.63.0

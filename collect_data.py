@@ -29,7 +29,7 @@ class CollectedData():
         self.imgs = []
         for i, (arr_filename, gee_img_date) in enumerate(zip(self.arrs_filename, self.gee_imgs_date)):
             new_img = SatelliteImage(
-                arr_filename, 
+                arr_filename,
                 gee_img_date,
                 i+1,
                 self._resources_folder
@@ -84,7 +84,7 @@ class CollectedData():
     def get_most_recent_imgs(self) -> list[ee.Image, ee.Image]:
         """
         Query GEE library to get the 2 most recend and clearest images
-        A dataset-specific scale factor is also applied 
+        A dataset-specific scale factor is also applied
         """
         self.collection = (
             ee.ImageCollection("LANDSAT/LC09/C02/T1_L2")
@@ -206,18 +206,18 @@ class CollectedData():
         _avg_wind = sum(self.weather_data.wind) / len(self.weather_data.wind)
         _beaufort_scale = [0.5, 1.5, 3.3, 5.5, 7.9, 10.7, 13.8, 17.1, 20.7, 24.4, 28.4, 32.6]
         self.indicators['wind'] = (self._get_index(_avg_wind, _beaufort_scale) + 1) / len(_beaufort_scale)
-        
+
         self.indicators['humidity'] = sum(self.weather_data.humidity) / len(self.weather_data.humidity)
         self.indicators['humidity'] = 1 - self.indicators['humidity'] / 100
-        
+
         _avg_rain = sum(self.weather_data.rain) / len(self.weather_data.rain)
         _rainfall_classification = [10, 35.5, 64.4, 124.4]
         self.indicators['rain'] = 1 - self._get_index(_avg_rain, _rainfall_classification) / len(_rainfall_classification)
-        
+
         _avg_temp = sum(self.weather_data.temperature) / len(self.weather_data.temperature)
         _temp_classification = [4.1, 8.0, 13.0, 18.0, 23.0, 29.0, 35.0, 41.0]
         self.indicators['temp'] = (self._get_index(_avg_temp, _temp_classification) + 1) / len(_temp_classification)
-        
+
         self.indicators['sunlight'] = sum(self.weather_data.sunlight) / len(self.weather_data.sunlight)
         self.indicators['sunlight'] /= 11
 
@@ -230,7 +230,7 @@ class CollectedData():
             * self.indicators['rain']
             * self.indicators['temp']
             * self.indicators['sunlight']
-        ) 
+        )
         logging.info("Final risk: " + str(self.overall_risk))
 
         return self.overall_risk
@@ -272,7 +272,7 @@ class WeatherData():
         graph_filename = f"{self._resources_folder}/temperature_chart_{curr_date}.svg"
         day_labels = [dt.strftime("%m/%d") for dt in self.dates]
 
-        plt.bar(day_labels, self.temperature, color="firebrick")  
+        plt.bar(day_labels, self.temperature, color="firebrick")
         plt.title("Temperature Forecast", fontsize=50)
         plt.ylabel("°C", fontsize='xx-large')
         plt.xticks(fontsize='xx-large')
@@ -327,7 +327,7 @@ class WeatherData():
         plt.bar(day_labels, self.sunlight, color="gold")
         plt.title("Sunlight forecast", fontsize=20)
         plt.ylabel("UV index")
-        plt.ylim(top=10) 
+        plt.ylim(top=10)
         plt.savefig(graph_filename)
         plt.clf()
 

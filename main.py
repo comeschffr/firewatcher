@@ -60,7 +60,9 @@ if __name__ == "__main__":
 
     lat = get_float_from_user(">>> LAT: ", "lat")
     lon = get_float_from_user(">>> LON: ", "lon")
-    # lat, lon = 38.219693, -94.259806 # for testing purpose only
+    logging.info(
+        f"User started request with lat={lat} and lon={lon}, {datetime.now().strftime('%Y%m%d-%H:%M:%S')}"
+    )
 
     start = datetime.now()
 

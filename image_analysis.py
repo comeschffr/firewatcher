@@ -38,7 +38,7 @@ class SatelliteImage():
     def __to_rgb_img(self) -> Image:
         img = Image.fromarray(self.np_arr, 'RGB')
         return img
-    
+
     def rgb_save(self) -> None:
         self.rgb_img.save(self.rgb_img_filename)
 
@@ -66,7 +66,7 @@ class SatelliteImage():
     def p_and_c_analysis(self) -> list[dict]:
         """
         Perform a cluster analysis to find the 3 dominant colors in the sat img,
-        along with their percentage presence 
+        along with their percentage presence
         """
         kmeans = KMeans(n_clusters=self.NB_CLUSTERS, random_state=0)
         kmeans.fit(self.flat_arr)
