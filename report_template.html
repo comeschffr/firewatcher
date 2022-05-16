@@ -1,102 +1,150 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>
-</title>
-<style>
-body {background-color:#ffffff;background-repeat:no-repeat;background-position:top left;background-attachment:fixed;}
-.title {
-    margin-top: 0cm; 
-    margin-bottom: 0; 
-    text-align: center;
-    width: 21cm; 
-    height: 3cm;
-        }
-.summary {
-    display: table; 
-    margin: 0 auto; 
-    width: 21cm; 
-    height: 3cm;
-    background-color: lightgrey;
-        }
-.satelite-div {
-    display: table; 
-    margin: 0 auto; 
-    width: 21cm; 
-    height: 3cm; 
-    padding: 0.25cm; 
-    border: 2px dotted lightgray;
-    margin-top: 0.25cm; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    font-weight: bold;
-        }
-.weather-div {
-    display: table; 
-    width: 21cm;
-    border-spacing: 2px; 
-    margin: 0 auto; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 2px dotted lightgray;
-    margin-top: 0.25cm;
-        }
-</style>
-</head>
-<body>
 
-<div class="title">
-<table style = "width:100%; vertical-align: bottom;">
-    <tr>
-        <td style="text-align: left">
-            <h1 style="font-size: 40px; text-align: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">FireWatcher Report</h1>
-        </td>
-        <td style="text-align: right">
-            <h1 style="font-size: 18px; text-align: right; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 200;">Generated on {{ timestamp }}</h1>
-        </td>
-    </tr>
-</table>
-</div>
-<div class="summary">
-    <table style = "width:100%; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: small; ">
-        <tr style="font-weight: bold;">
-            <th>Location Data</th>
-            <th>Header2</th>
-            <th>Header3</th>
-        </tr>
-        <tr style="text-align: center;">
-            <td>Latitude: {{ latitude }}</td>
-            <td>Smth goes here</td>
-            <td>Smth goes here</td>
-        </tr>
-        <tr style="text-align: center;">
-            <td>Longitude: {{ longitude }}</td>
-            <td>Smth goes here</td>
-            <td>Smth goes here</td>
-        </tr>
-    </table>
-</div>
-<div class="satelite-div">
-    <div style="display: table-row;">
-        <div style = "display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> {{ date_image_1 }} </div>
-        <div style = "display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> {{ date_image_2 }} </div>
+<head>
+  <style>
+    .title {
+      text-align: center;
+      font-family: "Times New Roman";
+      font-weight: bold;
+      text-decoration: underline;
+      font-size: 6ch;
+      margin-top: 2ch;
+    }
+    .subtitle {
+      text-align: center;
+      font-family: "Times New Roman";
+      font-style: italic;
+      font-size: 3ch;
+      margin-top: 1ch;
+    }
+    .general_info {
+      display: flex;
+      justify-content: center;
+      margin-top: 4ch;
+      font-size: 3ch;
+      text-align: center;
+    }
+    #coords {
+      margin-right: 3ch;
+      padding: 1ch 1ch 1ch 1ch;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: rgb(66, 66, 66);
+    }
+    #risk_index {
+      margin-left: 3ch;
+      font-weight: bold;
+      padding: 1ch 1ch 1ch 1ch;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: rgb(66, 66, 66);
+    }
+    #sat_data_container {
+      display: flex;
+      justify-content: center;
+    }
+    .sat_data {
+      display: inline-flex;
+      justify-content: center;
+      margin-top: 3ch;
+      padding: 1ch 1ch 0 1ch;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: rgb(66, 66, 66);
+    }
+    .sat_img_col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-content: flex-start;
+    }
+    #left_col {
+      margin-right: 3ch;
+    }
+    #right_col {
+      margin-left: 3ch;
+    }
+    #weather_data_container {
+      display: flex;
+      justify-content: center;
+    }
+    .weather_data {
+      display: flex;
+      justify-content: center;
+      margin-top: 3ch;
+      padding: 1ch 1ch 0 1ch;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: rgb(66, 66, 66);
+    }
+    .chart_col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-content: flex-start;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="title">
+    FireWatcher report
+  </div>
+  <div class="subtitle">
+    generated on {{ timestamp }}
+  </div>
+
+  <div class="general_info">
+    <div id="coords">
+      Latitude: {{ lat }}<br>
+      Longitude: {{ lon }}
     </div>
-    <div style="display: table-row; margin-bottom: 0cm;">
-        <div style="display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> <img src="data:image/png;base64,{{ satelite_1 }}" width="270px" height = "270px"> </div>
-        <div style="display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> <img src="data:image/png;base64,{{ satelite_2 }}" width="270px" height = "270px"> </div>
-</div>
-    <div style="display: table-row; margin-top: 0cm;">
-        <div style="display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> <img src="data:image/png;base64,{{ satelite_1_color }}" width="300px" height = "150px"> </div>
-        <div style="display: table-cell; text-align: center; margin-left: 0.75cm; margin-right: 0.75cm;"> <img src="data:image/png;base64,{{ satelite_2_color }}" width="300px" height = "150px"> </div>
+    <div id="risk_index">
+      Wildifire risk<br>
+      {{ risk_index }}%
     </div>
-</div>
-<div class="weather-div">
-    <div style="display: table-row; text-align: center; margin-top: 0cm; margin-bottom: 0cm">
-        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ temp_chart }}" width="270px" height = "270px"> </div>
-        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ rain_chart }}" width="270px" height = "270px"> </div>
-</div>
-    <div style="display: table-row; text-align: center; margin-top: 0cm; margin-bottom: 0cm">
-        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ sunlight_chart }}" width="270px" height = "270px"> </div>
-        <div style="display: table-cell;"> <img src="data:image/png;base64,{{ wind_chart }}" width="270px" height = "270px"> </div>
+  </div>
+
+  <div id="sat_data_container">
+    <div class="sat_data">
+      <div class="sat_img_col" id="left_col">
+        <div style="font-style: italic; font-weight: bold;">
+          {{ date_image_2 }}
+        </div>
+        <div>
+          <img src="data:image/png;base64,{{ sat_img_2 }}" width="320" height="320">
+        </div>
+        <div>
+          <img src="data:image/svg+xml;base64,{{ sat_col_2 }}" width="320" height="160">
+        </div>
+      </div>
+      <div class="sat_img_col" id="right_col">
+        <div style="font-style: italic; font-weight: bold;">
+          {{ date_image_1 }}
+        </div>
+        <div>
+          <img src="data:image/png;base64,{{ sat_img_1 }}" width="320" height="320">
+        </div>
+        <div>
+          <img src="data:image/svg+xml;base64,{{ sat_col_1 }}" width="320" height="160">
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+
+  <div id="weather_data_container">
+    <div class="weather_data">
+      <div class="chart_col" id="left_col">
+        <img src="data:image/svg+xml;base64,{{ temp_chart }}" width="320" height="240">
+        <img src="data:image/svg+xml;base64,{{ rain_chart }}" width="320" height="240">
+      </div>
+      <div class="chart_col" id="right_col">
+        <img src="data:image/svg+xml;base64,{{ sunlight_chart }}" width="320" height="240">
+        <img src="data:image/svg+xml;base64,{{ wind_chart }}" width="320" height="240">
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

@@ -13,32 +13,30 @@ from image_analysis import SatelliteImage
 
 
 class CollectedData():
-    def __init__(self, lat: float, lon: float, weather_api_key: str) -> None:
+    def __init__(self, lat: float, lon: float, weather_api_key: str, resources_folder: str) -> None:
+        # in case the user wants to generate several reports, initializing GEE can be skipped
         if not getattr(self, 'established', False):
             self.initialize_gee()
         self.lat = lat
         self.lon = lon
+        self._resources_folder = resources_folder
+        self.indicators = {}
         self.make_aoi()
         self.get_most_recent_imgs()
         self.get_imgs_download_url()
         self.download_files()
-        # self.arrs_filename = [
-        #     "images/76e9e3ba_38.219693_-94.259806_05-03-2022_181759_1.arr",
-        #     "images/76e9e3ba_38.219693_-94.259806_05-03-2022_181812_2.arr",
-        # ]
-        # self.gee_imgs_date = [
-        #     datetime(2022, 4, 19, 18, 54),
-        #     datetime(2022, 3, 2, 17, 54),
-        # ]
+
         self.imgs = []
-        for arr_filename, gee_img_date in zip(self.arrs_filename, self.gee_imgs_date):
+        for i, (arr_filename, gee_img_date) in enumerate(zip(self.arrs_filename, self.gee_imgs_date)):
             new_img = SatelliteImage(
                 arr_filename, 
                 gee_img_date,
+                i+1,
+                self._resources_folder
             )
             self.imgs.append(new_img)
 
-        self.weather_data = WeatherData(self.lat, self.lon, weather_api_key)
+        self.weather_data = WeatherData(self.lat, self.lon, weather_api_key, self._resources_folder)
 
     def initialize_gee(self) -> None:
         # ee.Authenticate()
@@ -48,6 +46,9 @@ class CollectedData():
         self.established = True
 
     def make_aoi(self) -> ee.Geometry.Polygon:
+        """
+        Making the Area of Interest object to use the GEE library
+        """
         self.aoi = ee.Geometry.Polygon(
             [[
                 [self.lon-0.1, self.lat+0.1],
@@ -65,6 +66,10 @@ class CollectedData():
         return datetime.fromtimestamp(timestamp/1000)
 
     def __remove_duplicate_dates(self, list_of_imgs: ee.List) -> ee.List:
+        """
+        Removing images that have the same date
+        This case happends when the AoI lies between two tiles
+        """
         already_seen_dates = set()
         cleaned_img_list = ee.List([])
 
@@ -77,6 +82,10 @@ class CollectedData():
         return cleaned_img_list
 
     def get_most_recent_imgs(self) -> list[ee.Image, ee.Image]:
+        """
+        Query GEE library to get the 2 most recend and clearest images
+        A dataset-specific scale factor is also applied 
+        """
         self.collection = (
             ee.ImageCollection("LANDSAT/LC09/C02/T1_L2")
             .filterBounds(self.aoi)
@@ -145,19 +154,20 @@ class CollectedData():
                 size = f.write(data)
                 bar.update(size)
 
-        return
-
     def download_files(self) -> list[str, str]:
+        """
+        Downloading and saving the 2 images as numpy arrays
+        """
         curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
         base_filename_uuid = str(uuid.uuid4())[:8]
         self.arrs_filename = [
             (
-                "images/" + base_filename_uuid + "_" +
+                self._resources_folder + "/" + base_filename_uuid + "_" +
                 str(self.lat) + "_" + str(self.lon) + "_" +
                 curr_date + "_" + "1" + ".arr"
             ),
             (
-                "images/" + base_filename_uuid + "_" +
+                self._resources_folder + "/" + base_filename_uuid + "_" +
                 str(self.lat) + "_" + str(self.lon) + "_" +
                 curr_date + "_" + "2" + ".arr"
             )
@@ -183,58 +193,61 @@ class CollectedData():
         return len(scale)
 
     def compute_risk(self) -> float:
-        self.dryness_index = []
+        """
+        Compute final risk index from all the data collected
+        """
+        self.indicators['dryness'] = []
         for color1, color2 in zip(self.imgs[0].p_and_c, self.imgs[1].p_and_c):
             r1, r2 = color1['rgb'][0].item(), color2['rgb'][0].item()
             g1, g2 = color1['rgb'][1].item(), color2['rgb'][1].item()
             _dryness = (1 + (r1 - r2) / r2) * (1 + (g2 - g1) / g1)
-            self.dryness_index.append(_dryness)
-        print("Dryness index:", self.dryness_index)
+            self.indicators['dryness'].append(_dryness)
 
         _avg_wind = sum(self.weather_data.wind) / len(self.weather_data.wind)
         _beaufort_scale = [0.5, 1.5, 3.3, 5.5, 7.9, 10.7, 13.8, 17.1, 20.7, 24.4, 28.4, 32.6]
-        self.wind_index = (self._get_index(_avg_wind, _beaufort_scale) + 1) / len(_beaufort_scale)
-        print("Wind index:", self.wind_index)
+        self.indicators['wind'] = (self._get_index(_avg_wind, _beaufort_scale) + 1) / len(_beaufort_scale)
         
-        self.humidity_index = sum(self.weather_data.humidity) / len(self.weather_data.humidity)
-        self.humidity_index = 1 - self.humidity_index / 100
-        print("Humidity index:", self.humidity_index)
+        self.indicators['humidity'] = sum(self.weather_data.humidity) / len(self.weather_data.humidity)
+        self.indicators['humidity'] = 1 - self.indicators['humidity'] / 100
         
         _avg_rain = sum(self.weather_data.rain) / len(self.weather_data.rain)
         _rainfall_classification = [10, 35.5, 64.4, 124.4]
-        self.rain_index = 1 - self._get_index(_avg_rain, _rainfall_classification) / len(_rainfall_classification)
-        print("Rain index:", self.rain_index)
+        self.indicators['rain'] = 1 - self._get_index(_avg_rain, _rainfall_classification) / len(_rainfall_classification)
         
         _avg_temp = sum(self.weather_data.temperature) / len(self.weather_data.temperature)
         _temp_classification = [4.1, 8.0, 13.0, 18.0, 23.0, 29.0, 35.0, 41.0]
-        self.temp_index = (self._get_index(_avg_temp, _temp_classification) + 1) / len(_temp_classification)
-        print("Temp index:", self.temp_index)
+        self.indicators['temp'] = (self._get_index(_avg_temp, _temp_classification) + 1) / len(_temp_classification)
         
-        self.sunlight_index = sum(self.weather_data.sunlight) / len(self.weather_data.sunlight)
-        self.sunlight_index /= 11
-        print("Sunlight index:", self.sunlight_index)
+        self.indicators['sunlight'] = sum(self.weather_data.sunlight) / len(self.weather_data.sunlight)
+        self.indicators['sunlight'] /= 11
 
-        print(math.prod(self.dryness_index))
+        logging.info(self.indicators)
+
         self.overall_risk = (
-            math.prod(self.dryness_index)
-            * self.wind_index
-            * self.humidity_index
-            * self.rain_index
-            * self.temp_index
-            * self.sunlight_index
+            math.prod(self.indicators['dryness'])
+            * self.indicators['wind']
+            * self.indicators['humidity']
+            * self.indicators['rain']
+            * self.indicators['temp']
+            * self.indicators['sunlight']
         ) 
+        logging.info("Final risk: " + str(self.overall_risk))
 
         return self.overall_risk
 
 
 class WeatherData():
-    def __init__(self, lat: float, lon: float, api_key: str) -> None:
+    def __init__(self, lat: float, lon: float, api_key: str, resources_folder: str) -> None:
         self.lat = lat
         self.lon = lon
         self.api_key = api_key
+        self._resources_folder = resources_folder
         self.get_and_set_data_from_api()
 
     def get_and_set_data_from_api(self) -> None:
+        """
+        Query the weather API and structure useful data
+        """
         weather_url = "https://api.openweathermap.org/data/2.5/onecall"
         parameters = {
             'lat': self.lat,
@@ -255,19 +268,23 @@ class WeatherData():
         self.sunlight = [day['uvi'] for day in req_data['daily']]
 
     def make_temperature_chart(self) -> str:
-        graph_filename = "resources/temperature_chart.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        graph_filename = f"{self._resources_folder}/temperature_chart_{curr_date}.svg"
         day_labels = [dt.strftime("%m/%d") for dt in self.dates]
 
         plt.bar(day_labels, self.temperature, color="firebrick")  
-        plt.title(str(len(self.temperature)) + "Temperature Forecast")
-        plt.ylabel("°C")
+        plt.title("Temperature Forecast", fontsize=50)
+        plt.ylabel("°C", fontsize='xx-large')
+        plt.xticks(fontsize='xx-large')
+        plt.yticks(fontsize='xx-large')
         plt.savefig(graph_filename)
         plt.clf()
 
         return graph_filename
 
     def make_humidity_rain_chart(self) -> str:
-        graph_filename = "resources/hum_rain_chart.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        graph_filename = f"{self._resources_folder}/hum_rain_chart_{curr_date}.svg"
         day_labels = [dt.strftime("%m/%d") for dt in self.dates]
 
         fig, ax = plt.subplots()
@@ -283,18 +300,19 @@ class WeatherData():
         labs = [leg.get_label() for leg in legends]
         ax.legend(legends, labs, loc=0)
 
-        plt.title("Rain and Humidity Forecast")
+        plt.title("Rain and Humidity Forecast", fontsize=20)
         fig.savefig(graph_filename)
         plt.clf()
 
         return graph_filename
 
     def make_wind_chart(self) -> str:
-        graph_filename = "resources/wind_chart.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        graph_filename = f"{self._resources_folder}/wind_chart_{curr_date}.svg"
         day_labels = [dt.strftime("%m/%d") for dt in self.dates]
 
         plt.plot(day_labels, self.wind, marker='o', color="olivedrab")
-        plt.title("Wind forecast")
+        plt.title("Wind forecast", fontsize=20)
         plt.ylabel("m/s")
         plt.savefig(graph_filename)
         plt.clf()
@@ -302,13 +320,14 @@ class WeatherData():
         return graph_filename
 
     def make_sunlight_chart(self) -> str:
-        graph_filename = "resources/sunlight_chart.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        graph_filename = f"{self._resources_folder}/sunlight_chart_{curr_date}.svg"
         day_labels = [dt.strftime("%m/%d") for dt in self.dates]
 
         plt.bar(day_labels, self.sunlight, color="gold")
-        plt.title("Sunlight forecast")
+        plt.title("Sunlight forecast", fontsize=20)
         plt.ylabel("UV index")
-        plt.ylim(top=10)
+        plt.ylim(top=10) 
         plt.savefig(graph_filename)
         plt.clf()
 

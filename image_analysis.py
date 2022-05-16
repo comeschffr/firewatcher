@@ -9,16 +9,21 @@ from sklearn.cluster import KMeans
 
 
 class SatelliteImage():
-    def __init__(self, np_arr_filename: str, date: datetime) -> None:
+    def __init__(self, np_arr_filename: str, date: datetime, id: str, resources_folder: str) -> None:
         self.NB_CLUSTERS = 3
-        self.date = date
         self.np_arr_filename = np_arr_filename
+        self.date = date
+        self.id = id
+        self._resources_folder = resources_folder
         self.np_arr = self.__to_np_arr()
         self.rgb_img = self.__to_rgb_img()
         self.rgb_img_filename = self.np_arr_filename.replace("arr", "png")
         self.rgb_save()
 
     def __to_np_arr(self) -> np.ndarray:
+        """
+        Reads np array from disk and transforms data with max/min according to the dataset rules
+        """
         logging.info("Creating numpy array from bytes response...")
         with open(self.np_arr_filename, "rb") as f:
             arr = np.lib.format.read_array(f)
@@ -40,11 +45,13 @@ class SatelliteImage():
     def run_color_analysis(self) -> None:
         self.prepare()
         self.p_and_c_analysis()
-        self.make_block_graph()
         self.make_bar_chart()
         self.make_final_output()
 
     def prepare(self) -> np.ndarray:
+        """
+        Reduce image size and reshape data to make it analyzable
+        """
         tmp_arr = self.np_arr.copy()
         logging.info(f"Original image shape: {tmp_arr.shape}")
 
@@ -57,6 +64,10 @@ class SatelliteImage():
         return self.flat_arr
 
     def p_and_c_analysis(self) -> list[dict]:
+        """
+        Perform a cluster analysis to find the 3 dominant colors in the sat img,
+        along with their percentage presence 
+        """
         kmeans = KMeans(n_clusters=self.NB_CLUSTERS, random_state=0)
         kmeans.fit(self.flat_arr)
 
@@ -73,10 +84,14 @@ class SatelliteImage():
         return self.p_and_c
 
     def make_block_graph(self) -> str:
-        file_name_box = "resources/dominant_colors_percent.png"
+        """
+        Make plot containing the RGB colors of the 3 dominant colors along with their percentage
+        """
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        file_name_box = f"{self._resources_folder}/dominant_colors_percent_{curr_date}_{self.id}.svg"
 
         block = np.ones((50, 50, self.NB_CLUSTERS), dtype="uint")
-        plt.figure(figsize=(12, 8))
+        plt.figure(figsize=(18, 9))
 
         for i, color in enumerate(self.p_and_c):
             block[:] = color['rgb']
@@ -85,7 +100,8 @@ class SatelliteImage():
             plt.imshow(block)
             plt.xticks([])
             plt.xlabel(
-                str(round(color['percent']*100, 2)) + "%"
+                str(round(color['percent']*100, 2))+"%",
+                fontsize=50
             )
             plt.yticks([])
 
@@ -95,7 +111,8 @@ class SatelliteImage():
         return file_name_box
 
     def make_bar_chart(self) -> str:
-        file_name_bar = "resources/dominant_colors_bar.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        file_name_bar = f"{self._resources_folder}/dominant_colors_bar_{curr_date}_{self.id}.svg"
 
         bar = np.ones((50, 500, self.NB_CLUSTERS), dtype="uint")
         plt.figure(figsize=(12, 9))
@@ -117,7 +134,8 @@ class SatelliteImage():
         return file_name_bar
 
     def make_final_output(self) -> str:
-        file_name_final = "resources/image_with_blocks.png"
+        curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
+        file_name_final = f"{self._resources_folder}/image_with_blocks_{curr_date}_{self.id}.png"
 
         tmp_arr = self.np_arr.copy()
         rows = tmp_arr.shape[1]
