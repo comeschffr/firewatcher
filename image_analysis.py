@@ -20,6 +20,15 @@ class SatelliteImage():
         self.rgb_img_filename = self.np_arr_filename.replace("arr", "png")
         self.rgb_save()
 
+    def __repr__(self) -> str:
+        rep = self.__dict__.copy()
+        rep['np_arr'] = f"numpy.ndarray({rep['np_arr'].shape})"
+        if hasattr(self, 'flat_arr'):
+            rep['flat_arr'] = f"numpy.ndarray({rep['flat_arr'].shape})"
+        return (
+            f"SatelliteImage({', '.join([key+'='+str(val) for key, val in rep.items()])})"
+        )
+
     def __to_np_arr(self) -> np.ndarray:
         """
         Reads np array from disk and transforms data with max/min according to the dataset rules
