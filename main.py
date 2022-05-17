@@ -74,6 +74,7 @@ if __name__ == "__main__":
         weather_api_key=config['DEFAULT']['api_key'],
         resources_folder=config['DEFAULT']['resources_folder'],
     )
+
     data.imgs[0].run_color_analysis()
     data.imgs[1].run_color_analysis()
 

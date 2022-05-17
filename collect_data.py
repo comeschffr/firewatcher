@@ -38,6 +38,14 @@ class CollectedData():
 
         self.weather_data = WeatherData(self.lat, self.lon, weather_api_key, self._resources_folder)
 
+    def __repr__(self) -> str:
+        rep = self.__dict__.copy()
+        rep['aoi'] = "ee.Geometry.Polygon("+str(self.aoi.getInfo())+")"
+        rep['collection'] = "ee.ImageCollection(id="+self.collection.getInfo()['id']+")"
+        return (
+            f"CollectedData({', '.join([key+'='+str(val) for key, val in rep.items()])})"
+        )
+
     def initialize_gee(self) -> None:
         # ee.Authenticate()
         logging.info("Initializing Google Earth Engine...")
@@ -243,6 +251,13 @@ class WeatherData():
         self.api_key = api_key
         self._resources_folder = resources_folder
         self.get_and_set_data_from_api()
+
+    def __repr__(self) -> str:
+        rep = self.__dict__.copy()
+        rep['api_key'] = '*'*(len(rep['api_key'])-8) + rep['api_key'][-8:]
+        return (
+            f"WeatherData({', '.join([key+'='+str(val) for key, val in rep.items()])})"
+        )
 
     def get_and_set_data_from_api(self) -> None:
         """
