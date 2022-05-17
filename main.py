@@ -1,5 +1,6 @@
 import configparser
 import logging
+import os
 import sys
 import webbrowser
 
@@ -21,6 +22,7 @@ logging.basicConfig(
     ]
 )
 plt.set_loglevel(config['DEFAULT'].get('plt_loglevel', "WARNING"))
+os.makedirs(config['DEFAULT']['resources_folder'], exist_ok=True)
 
 
 def get_float_from_user(msg, key):
