@@ -2058,3 +2058,260 @@ INFO:root:Final risk: 0.06960295271304036
 INFO:root:{'sat_img_1': 'collected_resources/50d71a6d_45.002114_9.240239_05-17-2022_010312_1.png', 'sat_img_2': 'collected_resources/50d71a6d_45.002114_9.240239_05-17-2022_010312_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_010327_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_010328_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_010328.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_010328.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_010328.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_010328.svg'}
 INFO:root:Report was generated in 33.05 seconds
 INFO:root:Report was saved at C:\Users\comes\Documents\Bocconi3rd\advanced_python\firewatcher\final_reports\firewatcher_report_20220517-010328.html
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-12:28:37
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-12:40:54
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-13:29:34
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.49 and lon=9.19, 20220517-13:31:27
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.49 and lon=9.19, 20220517-13:32:16
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-13:40:48
+INFO:root:Initializing Google Earth Engine...
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-13:56:49
+INFO:root:Initializing Google Earth Engine...
+WARNING:googleapiclient.http:Invalid JSON content from response: b'{\n  "error": {\n    "code": 403,\n    "message": "Not signed up for Earth Engine. Visit https://earthengine.google.com/signup/",\n    "status": "PERMISSION_DENIED"\n  }\n}\n'
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-14:02:14
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/1d1bfdff1a4c4daf182444ec481c3aee-e78a7529a7c86da17104a8ff7121e122:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/f7839ce5df6881185182448f2419b92e-05c5161809525d163f2d15b9b702bef8:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/1d1bfdff1a4c4daf182444ec481c3aee-e78a7529a7c86da17104a8ff7121e122:getPixels...
+INFO:root:Saving raw request content to collected_resources/680c7ba7_45.46_9.19_05-17-2022_140310_1.arr
+INFO:root:User started request with lat=45.46 and lon=9.19, 20220517-14:05:25
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/1d1bfdff1a4c4daf182444ec481c3aee-8b6cf2952eddbbbbd0fe6eb8c09c8f15:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/f7839ce5df6881185182448f2419b92e-24ebee0b966255406e880c807253e53e:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/1d1bfdff1a4c4daf182444ec481c3aee-8b6cf2952eddbbbbd0fe6eb8c09c8f15:getPixels...
+INFO:root:Saving raw request content to collected_resources/d60075eb_45.46_9.19_05-17-2022_140647_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/f7839ce5df6881185182448f2419b92e-24ebee0b966255406e880c807253e53e:getPixels...
+INFO:root:Saving raw request content to collected_resources/d60075eb_45.46_9.19_05-17-2022_140647_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-14:13:28
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-4d7d33eaf44f7124e0e1e541c6c36115:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-ae0d114700b18bda3b01ced34858ba83:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-4d7d33eaf44f7124e0e1e541c6c36115:getPixels...
+INFO:root:Saving raw request content to collected_resources/8a1eb7b0_38.219693_-94.259806_05-17-2022_141342_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-ae0d114700b18bda3b01ced34858ba83:getPixels...
+INFO:root:Saving raw request content to collected_resources/8a1eb7b0_38.219693_-94.259806_05-17-2022_141342_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.255, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012772305808740983
+INFO:root:{'sat_img_1': 'collected_resources/8a1eb7b0_38.219693_-94.259806_05-17-2022_141342_1.png', 'sat_img_2': 'collected_resources/8a1eb7b0_38.219693_-94.259806_05-17-2022_141342_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_141407_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_141407_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_141408.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_141408.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_141409.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_141409.svg'}
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-14:16:06
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-a5a6f7da0297615145d87448d3abb2a5:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-66440bd40427234b29bd43886572dc28:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-a5a6f7da0297615145d87448d3abb2a5:getPixels...
+INFO:root:Saving raw request content to collected_resources/ee8f0d24_38.219693_-94.259806_05-17-2022_141621_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-66440bd40427234b29bd43886572dc28:getPixels...
+INFO:root:Saving raw request content to collected_resources/ee8f0d24_38.219693_-94.259806_05-17-2022_141621_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 1.0, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.017113220201254258
+INFO:root:{'sat_img_1': 'collected_resources/ee8f0d24_38.219693_-94.259806_05-17-2022_141621_1.png', 'sat_img_2': 'collected_resources/ee8f0d24_38.219693_-94.259806_05-17-2022_141621_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_141638_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_141638_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_141639.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_141639.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_141639.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_141639.svg'}
+INFO:root:Report was generated in 33.78 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-141639.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-14:24:28
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-84bf5029d67811978a584f5f7fd35e11:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-620511d3c3779c662a255c329e98f234:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-84bf5029d67811978a584f5f7fd35e11:getPixels...
+INFO:root:Saving raw request content to collected_resources/7930fa83_38.219693_-94.259806_05-17-2022_142442_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-620511d3c3779c662a255c329e98f234:getPixels...
+INFO:root:Saving raw request content to collected_resources/7930fa83_38.219693_-94.259806_05-17-2022_142442_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.255, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012772305808740983
+INFO:root:{'sat_img_1': 'collected_resources/7930fa83_38.219693_-94.259806_05-17-2022_142442_1.png', 'sat_img_2': 'collected_resources/7930fa83_38.219693_-94.259806_05-17-2022_142442_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_142510_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_142512_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_142513.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_142514.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_142515.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_142515.svg'}
+INFO:root:Report was generated in 48.32 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-142516.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-14:26:50
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-a6d153c4f8044174a5f6dc46075d426b:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-1956a7d65a30d914a48f4f352651a452:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0f5d5bdda8e5708fc2d9373b20e158c9-a6d153c4f8044174a5f6dc46075d426b:getPixels...
+INFO:root:Saving raw request content to collected_resources/d1071dc0_38.219693_-94.259806_05-17-2022_142707_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/21fe924d10ec00523981fa414f2e5b8f-1956a7d65a30d914a48f4f352651a452:getPixels...
+INFO:root:Saving raw request content to collected_resources/d1071dc0_38.219693_-94.259806_05-17-2022_142707_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.255, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012772305808740983
+INFO:root:{'sat_img_1': 'collected_resources/d1071dc0_38.219693_-94.259806_05-17-2022_142707_1.png', 'sat_img_2': 'collected_resources/d1071dc0_38.219693_-94.259806_05-17-2022_142707_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_142750_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_142752_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_142754.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_142754.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_142756.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_142756.svg'}
+INFO:root:Report was generated in 66.39 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-142757.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-15:51:33
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cd4382e6a702e8d37dbaf6f68bda808e-d2c62d67ec942bb4663e740e7de90c23:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/d1f87428b054511b8bc76bf253c36db2-45c2cdb3a3cfc996096fc74ffb0ab47a:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cd4382e6a702e8d37dbaf6f68bda808e-d2c62d67ec942bb4663e740e7de90c23:getPixels...
+INFO:root:Saving raw request content to collected_resources/b94bd5f0_38.219693_-94.259806_05-17-2022_155146_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/d1f87428b054511b8bc76bf253c36db2-45c2cdb3a3cfc996096fc74ffb0ab47a:getPixels...
+INFO:root:Saving raw request content to collected_resources/b94bd5f0_38.219693_-94.259806_05-17-2022_155146_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/b94bd5f0_38.219693_-94.259806_05-17-2022_155146_1.png', 'sat_img_2': 'collected_resources/b94bd5f0_38.219693_-94.259806_05-17-2022_155146_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_155206_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_155206_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_155207.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_155207.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_155207.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_155207.svg'}
+INFO:root:Report was generated in 34.25 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-155208.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-15:58:22
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0ba5155fba25d1b5e8ae795226f7ea95-3d7b19a44ad9735e28132e3d74fc0e3e:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/46db92ded0f149407d2e8bf003df599d-6bb3e5865548f73a9aac8be20ed89e5a:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/0ba5155fba25d1b5e8ae795226f7ea95-3d7b19a44ad9735e28132e3d74fc0e3e:getPixels...
+INFO:root:Saving raw request content to collected_resources/cba66c3d_38.219693_-94.259806_05-17-2022_155835_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/46db92ded0f149407d2e8bf003df599d-6bb3e5865548f73a9aac8be20ed89e5a:getPixels...
+INFO:root:Saving raw request content to collected_resources/cba66c3d_38.219693_-94.259806_05-17-2022_155835_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/cba66c3d_38.219693_-94.259806_05-17-2022_155835_1.png', 'sat_img_2': 'collected_resources/cba66c3d_38.219693_-94.259806_05-17-2022_155835_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_155848_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_155849_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_155849.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_155849.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_155850.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_155850.svg'}
+INFO:root:Report was generated in 28.32 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-155850.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-15:59:57
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cac178ac378542fc4215e1b7da0013cf-9c317d68bccef7bf317cb3d75ab09086:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/9287ede154d1fd043f99ca5f08edf0d7-f9f2ae4812d74860d07a33c83e6ce80c:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cac178ac378542fc4215e1b7da0013cf-9c317d68bccef7bf317cb3d75ab09086:getPixels...
+INFO:root:Saving raw request content to collected_resources/aa022a57_38.219693_-94.259806_05-17-2022_160010_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/9287ede154d1fd043f99ca5f08edf0d7-f9f2ae4812d74860d07a33c83e6ce80c:getPixels...
+INFO:root:Saving raw request content to collected_resources/aa022a57_38.219693_-94.259806_05-17-2022_160010_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/aa022a57_38.219693_-94.259806_05-17-2022_160010_1.png', 'sat_img_2': 'collected_resources/aa022a57_38.219693_-94.259806_05-17-2022_160010_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_160023_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_160024_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_160024.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_160025.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_160025.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_160025.svg'}
+INFO:root:Report was generated in 28.3 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-160025.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-16:07:06
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/fe682be6759fa7e6e91185f2ae23b07e-aed2d4712a5ffe79832ba4c05a07b854:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/7de43a5ad6d2f2828de232edbab277ef-54275a84c944a00d88f5fe2fe9c4d8bc:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/fe682be6759fa7e6e91185f2ae23b07e-aed2d4712a5ffe79832ba4c05a07b854:getPixels...
+INFO:root:Saving raw request content to collected_resources/547e7291_38.219693_-94.259806_05-17-2022_160720_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/7de43a5ad6d2f2828de232edbab277ef-54275a84c944a00d88f5fe2fe9c4d8bc:getPixels...
+INFO:root:Saving raw request content to collected_resources/547e7291_38.219693_-94.259806_05-17-2022_160720_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/547e7291_38.219693_-94.259806_05-17-2022_160720_1.png', 'sat_img_2': 'collected_resources/547e7291_38.219693_-94.259806_05-17-2022_160720_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_160734_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_160735_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_160735.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_160735.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_160736.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_160736.svg'}
+INFO:root:Report was generated in 29.78 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-160736.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-16:08:16
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/3c2d89dae29fafbcf4f6019b605aaec9-d9c6675dacb9776fc0f28eede475fa5b:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/818a227adba8979fede906c8dad7da73-955b46618e6aee7b14b0047cf29690f2:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/3c2d89dae29fafbcf4f6019b605aaec9-d9c6675dacb9776fc0f28eede475fa5b:getPixels...
+INFO:root:Saving raw request content to collected_resources/8e73bc99_38.219693_-94.259806_05-17-2022_160828_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/818a227adba8979fede906c8dad7da73-955b46618e6aee7b14b0047cf29690f2:getPixels...
+INFO:root:Saving raw request content to collected_resources/8e73bc99_38.219693_-94.259806_05-17-2022_160828_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/8e73bc99_38.219693_-94.259806_05-17-2022_160828_1.png', 'sat_img_2': 'collected_resources/8e73bc99_38.219693_-94.259806_05-17-2022_160828_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_160841_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_160841_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_160842.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_160842.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_160842.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_160842.svg'}
+INFO:root:Report was generated in 26.44 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-160843.html
+INFO:root:User started request with lat=38.219693 and lon=-94.259806, 20220517-16:11:22
+INFO:root:Initializing Google Earth Engine...
+INFO:root:Google Earth Engine initialized successfully!
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/e664230aa3324cedc2e7a4582e9dbc7f-36c9f4c1572a360d69af38e572c2e82b:getPixels
+INFO:root:Found URL successfully: https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cc3d15e8958f33e48aab309b151758e0-3ec58c07cda0fc117922b92414513cab:getPixels
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/e664230aa3324cedc2e7a4582e9dbc7f-36c9f4c1572a360d69af38e572c2e82b:getPixels...
+INFO:root:Saving raw request content to collected_resources/a716236a_38.219693_-94.259806_05-17-2022_161136_1.arr
+INFO:root:Requesting image at https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/thumbnails/cc3d15e8958f33e48aab309b151758e0-3ec58c07cda0fc117922b92414513cab:getPixels...
+INFO:root:Saving raw request content to collected_resources/a716236a_38.219693_-94.259806_05-17-2022_161136_2.arr
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Creating numpy array from bytes response...
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:Original image shape: (1000, 1000, 3)
+INFO:root:After resizing image: (200, 200, 3)
+INFO:root:After Flattening array: (40000, 3)
+INFO:root:{'dryness': [0.7779665817048994, 0.881533101045296, 0.9303516558552407], 'wind': 0.4166666666666667, 'humidity': 0.25625, 'rain': 0.75, 'temp': 0.625, 'sunlight': 0.4019318181818182}
+INFO:root:Final risk: 0.012834915150940695
+INFO:root:{'sat_img_1': 'collected_resources/a716236a_38.219693_-94.259806_05-17-2022_161136_1.png', 'sat_img_2': 'collected_resources/a716236a_38.219693_-94.259806_05-17-2022_161136_2.png', 'sat_col_1': 'collected_resources/dominant_colors_percent_05-17-2022_161153_1.svg', 'sat_col_2': 'collected_resources/dominant_colors_percent_05-17-2022_161154_2.svg', 'temp_chart': 'collected_resources/temperature_chart_05-17-2022_161154.svg', 'rain_chart': 'collected_resources/hum_rain_chart_05-17-2022_161154.svg', 'wind_chart': 'collected_resources/wind_chart_05-17-2022_161154.svg', 'sunlight_chart': 'collected_resources/sunlight_chart_05-17-2022_161155.svg'}
+INFO:root:Report was generated in 32.36 seconds
+INFO:root:Report was saved at /Users/carlochionettismiderle/Desktop/firewatcher/final_reports/firewatcher_report_20220517-161155.html
