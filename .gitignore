@@ -6,6 +6,7 @@ resources/
 table_factors/
 miscellaneous/
 final_reports/
+logs.txt
 
 
 # Byte-compiled / optimized / DLL files
