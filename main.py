@@ -25,7 +25,11 @@ plt.set_loglevel(config['DEFAULT'].get('plt_loglevel', "WARNING"))
 os.makedirs(config['DEFAULT']['resources_folder'], exist_ok=True)
 
 
-def get_float_from_user(msg, key):
+def get_float_from_user(msg: str, key: str) -> float:
+    """
+    Validates user input type (float) and value range
+    It also returns default values if the user does not insert any value 
+    """
     while True:
         val = input(msg)
         try:
@@ -39,7 +43,7 @@ def get_float_from_user(msg, key):
                     print("Longitude ranges from -180 to 180")
                     raise ValueError
         except ValueError:
-            if not val: # returns default values if the user doesn't insert any
+            if not val:
                 return 38.219693 if key == "lat" else -94.259806
             if isinstance(val, str) and val.lower() == "quit":
                 print("Goodbye!")
@@ -66,6 +70,7 @@ if __name__ == "__main__":
         f"User started request with lat={lat} and lon={lon}, {datetime.now().strftime('%Y%m%d-%H:%M:%S')}"
     )
 
+    # to keep track of the time used to generate the report
     start = datetime.now()
 
     data = CollectedData(

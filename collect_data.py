@@ -89,7 +89,7 @@ class CollectedData():
 
         return cleaned_img_list
 
-    def get_most_recent_imgs(self) -> list[ee.Image, ee.Image]:
+    def get_most_recent_imgs(self) -> tuple[ee.Image, ee.Image]:
         """
         Query GEE library to get the 2 most recend and clearest images
         A dataset-specific scale factor is also applied
@@ -115,18 +115,18 @@ class CollectedData():
         if list_of_imgs.size().getInfo() < 2:
             raise ValueError("Could not find enough images for further analysis (<2 images)")
 
-        self.gee_imgs = [
+        self.gee_imgs = (
             ee.Image(list_of_imgs.get(0)).select("SR_B4", "SR_B3", "SR_B2"),
             ee.Image(list_of_imgs.get(1)).select("SR_B4", "SR_B3", "SR_B2"),
-        ]
-        self.gee_imgs_date = [
+        )
+        self.gee_imgs_date = (
             self.get_gee_img_date(self.gee_imgs[0]),
             self.get_gee_img_date(self.gee_imgs[1]),
-        ]
+        )
 
         return self.gee_imgs
 
-    def get_imgs_download_url(self) -> list[str, str]:
+    def get_imgs_download_url(self) -> list[str]:
         self.imgs_url = []
         for sat_img in self.gee_imgs:
             self.imgs_url.append(
@@ -162,13 +162,13 @@ class CollectedData():
                 size = f.write(data)
                 bar.update(size)
 
-    def download_files(self) -> list[str, str]:
+    def download_files(self) -> tuple[str, str]:
         """
         Downloading and saving the 2 images as numpy arrays
         """
         curr_date = datetime.now().strftime("%m-%d-%Y_%H%M%S")
         base_filename_uuid = str(uuid.uuid4())[:8]
-        self.arrs_filename = [
+        self.arrs_filename = (
             (
                 self._resources_folder + "/" + base_filename_uuid + "_" +
                 str(self.lat) + "_" + str(self.lon) + "_" +
@@ -179,7 +179,7 @@ class CollectedData():
                 str(self.lat) + "_" + str(self.lon) + "_" +
                 curr_date + "_" + "2" + ".arr"
             )
-        ]
+        )
 
         s = requests.Session()
         retries = Retry(
@@ -202,7 +202,7 @@ class CollectedData():
 
     def compute_risk(self) -> float:
         """
-        Compute final risk index from all the data collected
+        Compute individual indexes and the final risk index from all the data collected
         """
         self.indicators['dryness'] = []
         for color1, color2 in zip(self.imgs[0].p_and_c, self.imgs[1].p_and_c):
@@ -261,7 +261,7 @@ class WeatherData():
 
     def get_and_set_data_from_api(self) -> None:
         """
-        Query the weather API and structure useful data
+        Query the weather API and structure the useful data
         """
         weather_url = "https://api.openweathermap.org/data/2.5/onecall"
         parameters = {
