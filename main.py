@@ -39,7 +39,7 @@ def get_float_from_user(msg, key):
                     print("Longitude ranges from -180 to 180")
                     raise ValueError
         except ValueError:
-            if not val:
+            if not val: # returns default values if the user doesn't insert any
                 return 38.219693 if key == "lat" else -94.259806
             if isinstance(val, str) and val.lower() == "quit":
                 print("Goodbye!")

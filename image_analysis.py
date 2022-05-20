@@ -90,6 +90,8 @@ class SatelliteImage():
             } for percent, rgb in sorted(zip(percentages, dominant_colors), reverse=True)
         ]
 
+        logging.info("Cluster analysis achieved successfully")
+
         return self.p_and_c
 
     def make_block_graph(self) -> str:
