@@ -23,6 +23,7 @@ logging.basicConfig(
 )
 plt.set_loglevel(config['DEFAULT'].get('plt_loglevel', "WARNING"))
 os.makedirs(config['DEFAULT']['resources_folder'], exist_ok=True)
+os.makedirs(config['DEFAULT']['final_reports_folder'], exist_ok=True)
 
 
 def get_float_from_user(msg: str, key: str) -> float:
@@ -106,6 +107,7 @@ if __name__ == "__main__":
             'date_image_2': data.gee_imgs_date[1].strftime("%Y-%m-%d %H:%M"),
         },
         data.overall_risk,
+        config['DEFAULT']['final_reports_folder'],
     )
     final_report.add_resources(fp_resources)
     final_report.generate()

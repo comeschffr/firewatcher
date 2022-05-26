@@ -13,7 +13,7 @@
 ⠀⣿⠇⢸⠁⠀⠀⣰⠋⠳⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡀⠀⠀⣿⠀⣿⡇
 ⢸⣿⠀⣿⠀⠀⢠⠇⠀⠀⠀Welcome⠀⠀⢸⡇⠀⠀⡟⠀⣿⠇                \*/ INSTRUCTIONS \*/
 ⠈⣿⠀⢿⠀⠀⢸⠀⠀⠀⠀⠀⠀to⠀⠀⠀⠀⠀⣸⣇⠀⣸⠃⢰⣿⡀          type latitude/longitude coordinates  
-⠀⢿⣇⠸⣇⠀⢸⡄  FireWatch⠀⣹⢃⣴⣧⡴⢿⣿⠃          and let the magic happen...  \**/
+⠀⢿⣇⠸⣇⠀⢸⡄FireWatcher⠀⣹⢃⣴⣧⡴⢿⣿⠃          and let the magic happen...  \**/
 ⠀⠈⢿⡄⠘⢦⡈⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠃⢀⡽⠋⣠⣿⠋⠀ 
 ⠀⠀⠈⠻⣦⣀⠙⢮⣳⢤⡀⠀⠀⠀⠀⢀⣀⣴⡿⠶⠊⣉⣴⡾⠋⠁⠀           hint: type "quit" to terminate the program⠀
 ⠀⠀⠀⠀⠈⠛⢷⣦⣄⣉⡉⠙⠛⠋⠉⢉⣉⣠⣤⣶⡿⠟⠉⠀⠀

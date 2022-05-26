@@ -11,6 +11,7 @@ class FinalReport():
         template_path: str,
         location_data: dict,
         risk_index: float,
+        folder: str,
         file_name: str = None,
     ) -> None:
         self.template_path = template_path
@@ -19,7 +20,7 @@ class FinalReport():
         self.file_name = (
             file_name
             if file_name
-            else "final_reports/firewatcher_report_"+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+".html"
+            else f"{folder}/firewatcher_report_"+datetime.datetime.now().strftime("%Y%m%d-%H%M%S")+".html"
         )
         self.file_name = os.path.abspath(self.file_name)
         self._resources = {}
